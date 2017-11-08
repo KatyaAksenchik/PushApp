@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^4.6.0",
+    "gulp": "^3.9.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-scripts": "1.0.14",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "svgmin": "^0.1.0",
+    "svgstore": "^2.0.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

@@ -8,6 +8,56 @@ import {createStore} from 'redux';
 import './assets/css/styles.css'
 import registerServiceWorker from './registerServiceWorker';
 
+
+let excerciseId = 2;
+let excercise = [
+    {
+        id: 0,
+        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        task: [{
+            activity: "Jump",
+            approach: 10,
+            amount: 5
+        },
+            {
+                activity: "Push app",
+                approach: 3,
+                amount: 10
+            }
+        ]
+    },
+    {
+        id: 1,
+        date: "Fri Nov 06 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        task: [{
+            activity: "Jump",
+            approach: 10,
+            amount: 5
+        },
+            {
+                activity: "Push app",
+                approach: 3,
+                amount: 10
+            }]
+    }
+];
+
+let activitiesTypesList = [{
+        id: 1,
+        name: "Отжимания"
+    }, {
+        id: 2,
+        name: "Прыжки"
+    }, {
+        id: 3,
+        name: "Бег"
+    }, {
+        id: 4,
+        name: "Приседание"
+    }]
+;
+
+
 const card = (state, action) => {
     switch (action.type) {
         case  'ADD_CARD':
@@ -47,134 +97,321 @@ const cards = (state = [], action) => {
     }
 };
 
-const calendar = (state = [], action) => {
+let activeDay = null;
+
+const visibilityModal = (state = false, action) => {
     switch (action.type) {
-        case "INIT_CALENDAR":
-            return [];
-        case "SHOW_DATE":
-            console.log(state);
-            alert(action.date);
-            return state;
+        case 'OPEN_MODAL':
+            activeDay = action.day;
+            return state = true;
+        case 'CLOSE_MODAL':
+            return state = false;
         default:
-            const currentYear = (new Date()).getFullYear();
-            const currentmonth = (new Date()).getMonth();
-            const firstDayOfMonth = new Date(currentYear, currentmonth, 1);
-            let numberOfWeek = firstDayOfMonth.getDay() - 1;
-
-            if (numberOfWeek === -1) {
-                numberOfWeek = 6;
-            }
-            const daysInMonth = (new Date(currentYear, currentmonth + 1, 0)).getDate();
-
-            let caledarDaysStart = [];
-            if (numberOfWeek !== 0) {
-                caledarDaysStart.length = numberOfWeek;
-                caledarDaysStart.fill({"dayThisMonth": false}, 0, numberOfWeek);
-            }
-
-            for (let i = 1; i <= daysInMonth; i++) {
-                caledarDaysStart.push({
-                    "dayThisMonth": true,
-                    "dayNumber": i,
-                    "text": ["Push app", "Jump"]
-                })
-            }
-
-            let length = caledarDaysStart.length;
-            if (caledarDaysStart.length < 42) {
-                caledarDaysStart.length = 42;
-                caledarDaysStart.fill({"dayThisMonth": false}, length, 42);
-            }
-
-            return [...caledarDaysStart]
+            return state;
     }
 };
 
 
-const pushApp = combineReducers({cards, calendar});
-const store = createStore(pushApp);
+let initDaysOfPrevMonth = (numberOfWeek) => {
+    let caledarDaysStart = [];
+
+    if (numberOfWeek !== 0) {
+        caledarDaysStart.length = numberOfWeek;
+        caledarDaysStart.fill({"dayThisMonth": false}, 0, numberOfWeek);
+    }
+
+    return caledarDaysStart;
+};
 
 
-const ActivityItem = ({text}) => (
-    <li>
-        {text}
-    </li>
-);
+let initDaysOfCurrentMonth = (excersises, daysInMonth) => {
+    let filledDays = [];
 
-// {/*<ul className="activities-list">*/}
-// {/*{*/}
-// {/*activities.map((a, i) =>*/}
-// {/*<ActivityItem key={i} {...a}/>*/}
-// {/*)*/}
-// {/*}*/}
-// {/*</ul>*/}
+    excersises.forEach((item) => {
+        const index = new Date(item.date).getDate();
+        let tasks = [];
+        item.task.forEach((item) => {
+            tasks.push(item);
+        });
 
-const ActivitiesList = ({activities}) => (
-    <div>
-        {
-            activities.map((i) =>
-                <ActivityItem text={i}/>
-            )
+        filledDays[index] = {
+            "dayThisMonth": true,
+            "context": tasks
+        };
+    });
+
+
+    for (let i = 0; i <= daysInMonth; i++) {
+        if (!filledDays[i]) {
+            filledDays[i] = {
+                "dayThisMonth": true,
+                "dayNumber": i + 1,
+                "context": []
+            };
+        } else {
+            filledDays[i].dayNumber = i + 1;
         }
-    </div>
-);
+    }
 
 
-const Card = ({onClick, dayThisMonth, dayNumber, text}) => (
-    <div className="day">
-        <div style={{display: dayThisMonth ? "block" : "none"}}>
-            <p className="number">{dayNumber}</p>
-            <button onClick={onClick}>&#10133;</button>
-            <ActivitiesList activities={text}/>
+    return filledDays;
+};
+
+let initVisibleDays = (beginningOfMonth) => {
+    const length = beginningOfMonth.length;
+    if (beginningOfMonth.length < 35) {
+        beginningOfMonth.length = 35;
+        beginningOfMonth.fill({"dayThisMonth": false}, length, 35);
+    }
+
+    return beginningOfMonth;
+};
+
+let loadCalendarTracks = (currentmonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
+    const firstDayOfMonth = new Date(currentYear, currentmonth, 1);
+
+    let numberOfWeek = firstDayOfMonth.getDay() - 1;
+    if (numberOfWeek === -1) {
+        numberOfWeek = 6;
+    }
+
+    const daysInMonth = (new Date(currentYear, currentmonth + 1, 0)).getDate();
+
+    let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
+    let daysThisMonth = initDaysOfCurrentMonth(excercise, daysInMonth);
+    return initVisibleDays(dayPrevMonth.concat(daysThisMonth));
+
+};
+
+const calendar = (state = [], action) => {
+    switch (action.type) {
+        case "INIT_CALENDAR":
+            return state;
+        case "ADD_CALENDAR_DAY":
+            let newDay = {
+                activity: action.activity,
+                approach: action.approach,
+                amount: action.amount
+            };
+            console.log("Add callendar", newDay);
+            return state;
+        default:
+            return state;
+    }
+};
+
+
+let initCalendarState = () => {
+    return {calendar: loadCalendarTracks()}
+};
+
+const pushApp = combineReducers({cards, calendar, visibilityModal});
+const store = createStore(pushApp, initCalendarState());
+
+// store.dispatch(loadCalendarTracks());
+
+const ActivityItem = ({activity, approach, amount}) => {
+    return (
+        <li className="activity-item">
+            <p className="name">
+                {activity}
+            </p>
+            <p className="amount">
+                {approach}x {amount}
+            </p>
+        </li>
+    )
+};
+
+const ActivitiesList = ({context}) => {
+    return (
+        <ul className="activities-list">
+            {
+                context.map((item, i) =>
+                    <ActivityItem key={i} {...item}/>
+                )
+            }
+        </ul>
+    )
+};
+
+const Card = ({dayNumber, dayThisMonth, context}) => {
+    let activitiesContent = null;
+    if (dayThisMonth && context.length > 0) {
+        activitiesContent = <ActivitiesList context={context}/>
+    }
+
+    if (dayThisMonth) {
+        return (
+            <div className="day">
+                <button className="add" onClick={() => {
+                    store.dispatch({
+                        type: "OPEN_MODAL",
+                        day: dayNumber
+                    })
+                }}>+
+                </button>
+                <p className="number">{dayNumber}</p>
+                {activitiesContent}
+            </div>
+        )
+    } else {
+        return (
+            <div className="day last-month">
+
+            </div>
+        )
+    }
+};
+
+const CalenderHeader = () => (
+    <div className="calendar-header">
+        <div className="month">
+            <h2 className="title">Ноябрь</h2>
+            <button className="month-btn prev-month">
+                Назад
+            </button>
+            <button className="month-btn next-month">
+                Вперед
+            </button>
+        </div>
+        <div className="week-days">
+            <p>Понедельник</p>
+            <p>Вторник</p>
+            <p>Среда</p>
+            <p>Четверг</p>
+            <p>Пятница</p>
+            <p>Суббота</p>
+            <p>Воскресенье</p>
         </div>
     </div>
 );
 
-
-const CalendarList = ({calendar, onDayClick}) => (
+const CalendarBody = ({calendar, onDayClick}) => (
     <div className="calendar-body">
         {
             calendar.map((day, i) =>
-                <Card key={i} {...day} onClick={() => onDayClick(day.dayNumber)}/>
+                <Card key={i} {...day}/>
             )
         }
     </div>
 );
 
-class PushApp extends Component {
+
+class Calendar extends Component {
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(() => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
     render() {
+        const props = this.props;
+        const state = store.getState();
+
         return (
-            <div>
-                <div className="calendar">
-                    <div className="calendar-header">
-                        <div>Понедельник</div>
-                        <div>Вторник</div>
-                        <div>Среда</div>
-                        <div>Четверг</div>
-                        <div>Пятница</div>
-                        <div>Суббота</div>
-                        <div>Воскресенье</div>
-                    </div>
-                    <CalendarList calendar={this.props.calendar} onDayClick={(dayNumber) => {
+            <div className="calendar">
+                <CalenderHeader/>
+                <CalendarBody calendar={state.calendar}/>
+            </div>
+        )
+    }
+}
+
+// activity: "Push app",
+//     approach: 3,
+//     amount: 10
+
+class ModalAdd extends Component {
+    componentDidMount() {
+        this.unsubscribe = store.subscribe(() => this.forceUpdate());
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe();
+    }
+
+    render() {
+        const props = this.props;
+        const state = store.getState();
+
+        let activity, amount, approach;
+        return (
+            <div className="overlay" style={{
+                display: state.visibilityModal ? "flex" : "none"
+            }}>
+                <div className="modal">
+                    <button className="modal-close" onClick={() =>
                         store.dispatch({
-                            type: "SHOW_DATE",
-                            dayNumber
+                            type: "CLOSE_MODAL"
                         })
-                    }}/>
+                    }>
+                        &#10060;
+                    </button>
+                    <div className="modal-content">
+                        <h3>Добавить занятие за {activeDay} ноября</h3>
+                        <form action="">
+                            <div className="form-row">
+                                <label>
+                                    Выберете вид занятия:
+                                </label>
+                                <select name="" id="" onChange={(e) => activity = e.target.value}>
+                                    {
+                                        activitiesTypesList.map((activity) =>
+                                            <option key={activity.id} value={activity.name}>{activity.name}</option>
+                                        )
+                                    }
+                                </select>
+                            </div>
+                            <div className="form-row">
+                                <label>
+                                    Количество подходов:
+                                </label>
+                                <input type="text" ref={node => {
+                                    approach = node
+                                }}/>
+                            </div>
+                            <div className="form-row">
+                                <label>
+                                    Количество раз в подходе:
+                                </label>
+                                <input type="text" ref={node => {
+                                    amount = node
+                                }}/>
+                            </div>
+                            <div className="btn-wrapper">
+                                <button className="btn-submit" onClick={(e) => {
+                                    e.preventDefault();
+                                    store.dispatch({
+                                        type: "ADD_CALENDAR_DAY",
+                                        day: activeDay,
+                                        activity,
+                                        approach: approach.value,
+                                        amount: amount.value
+                                    });
+                                }}>Добавить занятие
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         )
     }
 }
 
-const render = () => {
-    ReactDOM.render(
-        <PushApp cards={store.getState().cards} calendar={store.getState().calendar}/>,
-        document.getElementById('root')
-    )
-};
+const PushApp = () => (
+    <div>
+        <Calendar />
+        <ModalAdd />
+    </div>
+);
 
-store.subscribe(render);
-render();
+ReactDOM.render(
+    <PushApp/>,
+    document.getElementById('root')
+);
 
 registerServiceWorker();
