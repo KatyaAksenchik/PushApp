@@ -9,49 +9,6 @@ import './assets/css/styles.css'
 import registerServiceWorker from './registerServiceWorker';
 
 
-let database = [
-    {
-        id: 0,
-        date: "Tue Oct 10 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        key: "09/2017",
-        exercise: {
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        }
-    },
-    {
-        id: 1,
-        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        key: "10/2017",
-        exercise: {
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        }
-    },
-    {
-        id: 2,
-        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        key: "10/2017",
-        exercise: {
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        }
-    },
-    {
-        id: 3,
-        date: "Tue Nov 07 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        key: "10/2017",
-        exercise: {
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        }
-    }
-];
-
 const setDatabase = (data) => {
     localStorage.setItem("database", JSON.stringify(data));
 };
@@ -60,6 +17,7 @@ const getDatabase = () => {
     return JSON.parse(localStorage.getItem("database"));
 };
 
+console.log(getDatabase());
 
 const groupDataByMonth = (data, prop = "key") => {
     return data.reduce((groups, item) => {
@@ -74,41 +32,12 @@ const groupDataByMonth = (data, prop = "key") => {
 
 const httpGetRecords = (month, year) => {
     let allRecords = groupDataByMonth(getDatabase());
+    if (!allRecords[`${month}/${year}`]) {
+        return [];
+    }
+
     return allRecords[`${month}/${year}`];
 };
-
-
-let excercise = [
-    {
-        id: 0,
-        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        task: [{
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        },
-            {
-                activity: "Отжимания",
-                approach: 3,
-                amount: 10
-            }
-        ]
-    },
-    {
-        id: 1,
-        date: "Fri Nov 06 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-        task: [{
-            activity: "Прыжки",
-            approach: 10,
-            amount: 5
-        },
-            {
-                activity: "Отжимания",
-                approach: 3,
-                amount: 10
-            }]
-    }
-];
 
 
 let activitiesTypesList = [{
@@ -154,30 +83,29 @@ let initDaysOfPrevMonth = (numberOfWeek) => {
 
 
 const initOccupiedDays = (year, month) => {
-    let records = httpGetRecords(10, 2017);
+    let records = httpGetRecords(month, year);
     console.log(records);
-
-    let filledDays = [];
+    let occupiedDays = [];
 
     records.forEach((item) => {
         const index = new Date(item.date).getDate();
 
-        if (!filledDays[index]) {
-            filledDays[index] = {
+        if (!occupiedDays[index]) {
+            occupiedDays[index] = {
                 "dayThisMonth": true,
                 "context": [item.exercise]
             };
         } else {
-            filledDays[index].context.push(item.exercise)
+            occupiedDays[index].context.push(item.exercise)
         }
     });
-    return filledDays;
+    return occupiedDays;
 };
 
 let initDaysOfCurrentMonth = ({currentYear, currentMonth, daysInMonth}) => {
     let filledDays = initOccupiedDays(currentYear, currentMonth);
 
-    for (let i = 0; i <= daysInMonth; i++) {
+    for (let i = 0; i <= daysInMonth-1; i++) {
         let dayString = new Date(currentYear, currentMonth, i + 1);
 
         if (!filledDays[i]) {
@@ -209,6 +137,7 @@ let initVisibleDays = (beginningOfMonth) => {
 };
 
 let loadCalendarTracks = (currentMonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
+    console.log("Curr", currentYear, currentMonth);
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
 
     let numberOfWeek = firstDayOfMonth.getDay() - 1;
@@ -250,8 +179,8 @@ const calendarDay = (state, action) => {
 
 const calendar = (state = [], action) => {
     switch (action.type) {
-        case "INIT_CALENDAR":
-            return state;
+        case "CHANGE_CALENDAR_MONTH":
+            return loadCalendarTracks(action.month, action.year);
         case "ADD_CALENDAR_DAY":
             return state.map((c) =>
                 calendarDay(c, action)
@@ -324,14 +253,31 @@ const Card = ({dayNumber, dayThisMonth, dayString, context}) => {
     }
 };
 
+let monthsName = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+let currMonth = 10;
+
 const CalenderHeader = () => (
     <div className="calendar-header">
         <div className="month">
-            <h2 className="title">Ноябрь</h2>
-            <button className="month-btn prev-month">
+            <h2 className="title">{monthsName[currMonth]}</h2>
+            <button className="month-btn prev-month" onClick={() => {
+                currMonth--;
+                store.dispatch({
+                    type: "CHANGE_CALENDAR_MONTH",
+                    month: currMonth,
+                    year: 2017
+                })
+            }}>
                 Назад
             </button>
-            <button className="month-btn next-month">
+            <button className="month-btn next-month" onClick={() => {
+                currMonth++;
+                store.dispatch({
+                    type: "CHANGE_CALENDAR_MONTH",
+                    month: currMonth,
+                    year: 2017
+                })
+            }}>
                 Вперед
             </button>
         </div>
