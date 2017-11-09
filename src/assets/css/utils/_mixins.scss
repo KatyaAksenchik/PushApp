@@ -1,8 +1,0 @@
-@mixin calendar-flex {
-    display: flex;
-    flex-wrap: wrap;
-
-    > * {
-        width: $day-box-width;
-    }
-}

@@ -1,3 +1,217 @@
-@import "utils/utils";
-@import "core/core";
-@import "components/components";
+//@import "utils/utils";
+//@import "core/core";
+//@import "components/components";
+$c-blue: blue;
+$c-light-grey: #f3f0eb;
+
+$day-box-width: 100%/7;
+$day-box-height: 180px;
+$day-box-add-btn-size: 25px;
+
+$border-calendar-color: black;
+
+$calendar-header-name-height: 50px;
+$calendar-header-days-height: 52px;
+$calendar-header-height: $calendar-header-name-height + $calendar-header-days-height;
+
+$modal-cross-position-size: 5px;
+
+@mixin calendar-flex {
+    display: flex;
+    flex-wrap: wrap;
+
+    > * {
+        width: $day-box-width;
+    }
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Brush Script MT", cursive;
+    margin: 0;
+}
+
+.calendar {
+    padding: 10px;
+    max-width: 1140px;
+    height: calc(100vh - 20px);
+}
+
+.calendar-header {
+    height: $calendar-header-height;
+    border: solid 2px $border-calendar-color;
+    border-bottom-width: 1px;
+
+    .month {
+        position: relative;
+        height: $calendar-header-name-height;
+
+        .month-btn {
+            position: absolute;
+            top: 50%;
+
+            padding: 0.5em 1.2em;
+            font-size: 12px;
+            font-family: "Brush Script MT", cursive;
+            text-transform: uppercase;
+            background-color: transparent;
+            border: solid 1px black;
+            border-radius: 20px;
+            transform: translateY(-50%);
+            cursor: pointer;
+
+            &.next-month {
+                right: 20px;
+            }
+
+            &.prev-month {
+                left: 20px;
+            }
+        }
+    }
+
+    .title {
+        margin: 0;
+        line-height: 2em;
+        text-align: center;
+        border-bottom: solid 2px black;
+    }
+
+    .week-days {
+        @include calendar-flex;
+        height: $calendar-header-days-height;
+        align-items: center;
+        text-align: center;
+
+        > p {
+            margin: 0;
+            line-height: 100%;
+        }
+    }
+}
+
+.calendar-body {
+    @include calendar-flex;
+    border: solid 1px $border-calendar-color;
+    border-top: none;
+    height: calc(100% - #{$calendar-header-height});
+
+    .day {
+        position: relative;
+        width: $day-box-width;
+        height: 20%;
+        padding: 40px 10px 10px;
+        border: solid 1px $border-calendar-color;
+        box-sizing: border-box;
+
+        &.last-month {
+            background-color: $c-light-grey;
+        }
+
+        .number {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            margin: 0;
+        }
+
+        .add {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            height: $day-box-add-btn-size;
+            width: $day-box-add-btn-size;
+            padding: 0;
+            text-align: center;
+            background-color: transparent;
+            border: solid 1px black;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    }
+
+    .activities-list {
+        padding-left: 0;
+
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+    position: relative;
+    flex-grow: 1;
+    max-width: 600px;
+    height: 300px;
+    padding: 40px 20px 10px;
+    background-color: #fff;
+
+    .modal-close {
+        position: absolute;
+        top: $modal-cross-position-size;
+        right: $modal-cross-position-size;
+        background: transparent;
+        border: none;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+    .modal-content {
+        .form-row {
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: inline-block;
+            width: 50%;
+        }
+
+        input[type="text"],
+        select {
+            font-family: "Brush Script MT", cursive;
+            width: 50%;
+            height: 30px;
+        }
+
+        .btn-wrapper {
+            text-align: center;
+        }
+
+        .btn-submit {
+            background: none;
+            border: solid 1px black;
+            padding: 10px 15px;
+            font-family: "Brush Script MT", cursive;
+            border-radius: 20px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+    }
+}
