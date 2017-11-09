@@ -131,16 +131,19 @@ body {
     width: 50%; }
   .modal .modal-content input[type="text"],
   .modal .modal-content select {
-    font-family: "Brush Script MT", cursive;
     width: 50%;
-    height: 30px; }
+    height: 30px;
+    font-family: "Brush Script MT", cursive; }
   .modal .modal-content .btn-wrapper {
     text-align: center; }
-  .modal .modal-content .btn-submit {
+  .modal .modal-content .btn-modal {
+    width: 110px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 6px 0;
+    font-family: "Brush Script MT", cursive;
+    text-transform: uppercase;
     background: none;
     border: solid 1px black;
-    padding: 10px 15px;
-    font-family: "Brush Script MT", cursive;
     border-radius: 20px;
-    text-transform: uppercase;
     cursor: pointer; }

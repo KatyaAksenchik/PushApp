@@ -195,22 +195,25 @@ body {
 
         input[type="text"],
         select {
-            font-family: "Brush Script MT", cursive;
             width: 50%;
             height: 30px;
+            font-family: "Brush Script MT", cursive;
         }
 
         .btn-wrapper {
             text-align: center;
         }
 
-        .btn-submit {
+        .btn-modal {
+            width: 110px;
+            margin-left: 5px;
+            margin-right: 5px;
+            padding: 6px 0;
+            font-family: "Brush Script MT", cursive;
+            text-transform: uppercase;
             background: none;
             border: solid 1px black;
-            padding: 10px 15px;
-            font-family: "Brush Script MT", cursive;
             border-radius: 20px;
-            text-transform: uppercase;
             cursor: pointer;
         }
     }

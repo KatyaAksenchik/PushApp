@@ -9,18 +9,86 @@ import './assets/css/styles.css'
 import registerServiceWorker from './registerServiceWorker';
 
 
-let excerciseId = 2;
+let database = [
+    {
+        id: 0,
+        date: "Tue Oct 10 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        key: "09/2017",
+        exercise: {
+            activity: "Прыжки",
+            approach: 10,
+            amount: 5
+        }
+    },
+    {
+        id: 1,
+        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        key: "10/2017",
+        exercise: {
+            activity: "Прыжки",
+            approach: 10,
+            amount: 5
+        }
+    },
+    {
+        id: 2,
+        date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        key: "10/2017",
+        exercise: {
+            activity: "Прыжки",
+            approach: 10,
+            amount: 5
+        }
+    },
+    {
+        id: 3,
+        date: "Tue Nov 07 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
+        key: "10/2017",
+        exercise: {
+            activity: "Прыжки",
+            approach: 10,
+            amount: 5
+        }
+    }
+];
+
+const setDatabase = (data) => {
+    localStorage.setItem("database", JSON.stringify(data));
+};
+
+const getDatabase = () => {
+    return JSON.parse(localStorage.getItem("database"));
+};
+
+
+const groupDataByMonth = (data, prop = "key") => {
+    return data.reduce((groups, item) => {
+        let val = item[prop];
+
+        groups[val] = groups[val] || [];
+        groups[val].push(item);
+
+        return groups;
+    }, {});
+};
+
+const httpGetRecords = (month, year) => {
+    let allRecords = groupDataByMonth(getDatabase());
+    return allRecords[`${month}/${year}`];
+};
+
+
 let excercise = [
     {
         id: 0,
         date: "Fri Nov 02 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
         task: [{
-            activity: "Jump",
+            activity: "Прыжки",
             approach: 10,
             amount: 5
         },
             {
-                activity: "Push app",
+                activity: "Отжимания",
                 approach: 3,
                 amount: 10
             }
@@ -30,17 +98,18 @@ let excercise = [
         id: 1,
         date: "Fri Nov 06 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
         task: [{
-            activity: "Jump",
+            activity: "Прыжки",
             approach: 10,
             amount: 5
         },
             {
-                activity: "Push app",
+                activity: "Отжимания",
                 approach: 3,
                 amount: 10
             }]
     }
 ];
+
 
 let activitiesTypesList = [{
         id: 1,
@@ -56,46 +125,6 @@ let activitiesTypesList = [{
         name: "Приседание"
     }]
 ;
-
-
-const card = (state, action) => {
-    switch (action.type) {
-        case  'ADD_CARD':
-            return {
-                id: action.id,
-                date: action.date,
-                repeats: action.repeats,
-                amounts: action.amounts
-            };
-        case 'EDIT_CARD':
-            if (state.id !== action.id) {
-                return state;
-            }
-
-            return {
-                ...state,
-                date: action.date,
-                repeats: action.repeats,
-                amounts: action.amounts
-            };
-        default:
-            return state
-    }
-};
-
-const cards = (state = [], action) => {
-    switch (action.type) {
-        case 'ADD_CARD':
-            return [
-                ...state,
-                card(undefined, action)
-            ];
-        case "EDIT_CARD":
-            return state.map(c => card(c, action));
-        default :
-            return []
-    }
-};
 
 let activeDay = null;
 
@@ -124,36 +153,48 @@ let initDaysOfPrevMonth = (numberOfWeek) => {
 };
 
 
-let initDaysOfCurrentMonth = (excersises, daysInMonth) => {
+const initOccupiedDays = (year, month) => {
+    let records = httpGetRecords(10, 2017);
+    console.log(records);
+
     let filledDays = [];
 
-    excersises.forEach((item) => {
+    records.forEach((item) => {
         const index = new Date(item.date).getDate();
-        let tasks = [];
-        item.task.forEach((item) => {
-            tasks.push(item);
-        });
 
-        filledDays[index] = {
-            "dayThisMonth": true,
-            "context": tasks
-        };
-    });
-
-
-    for (let i = 0; i <= daysInMonth; i++) {
-        if (!filledDays[i]) {
-            filledDays[i] = {
+        if (!filledDays[index]) {
+            filledDays[index] = {
                 "dayThisMonth": true,
-                "dayNumber": i + 1,
-                "context": []
+                "context": [item.exercise]
             };
         } else {
-            filledDays[i].dayNumber = i + 1;
+            filledDays[index].context.push(item.exercise)
+        }
+    });
+    return filledDays;
+};
+
+let initDaysOfCurrentMonth = ({currentYear, currentMonth, daysInMonth}) => {
+    let filledDays = initOccupiedDays(currentYear, currentMonth);
+
+    for (let i = 0; i <= daysInMonth; i++) {
+        let dayString = new Date(currentYear, currentMonth, i + 1);
+
+        if (!filledDays[i]) {
+            filledDays[i] = {
+                dayThisMonth: true,
+                dayNumber: i + 1,
+                dayString: dayString,
+                context: []
+            };
+        } else {
+            filledDays[i] = {
+                ...filledDays[i],
+                dayNumber: i + 1,
+                dayString: dayString,
+            }
         }
     }
-
-
     return filledDays;
 };
 
@@ -167,20 +208,44 @@ let initVisibleDays = (beginningOfMonth) => {
     return beginningOfMonth;
 };
 
-let loadCalendarTracks = (currentmonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
-    const firstDayOfMonth = new Date(currentYear, currentmonth, 1);
+let loadCalendarTracks = (currentMonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
+    const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
 
     let numberOfWeek = firstDayOfMonth.getDay() - 1;
     if (numberOfWeek === -1) {
         numberOfWeek = 6;
     }
 
-    const daysInMonth = (new Date(currentYear, currentmonth + 1, 0)).getDate();
+    const daysInMonth = (new Date(currentYear, currentMonth + 1, 0)).getDate();
+    const monthDays = {currentYear, currentMonth, daysInMonth};
 
     let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
-    let daysThisMonth = initDaysOfCurrentMonth(excercise, daysInMonth);
-    return initVisibleDays(dayPrevMonth.concat(daysThisMonth));
+    let daysThisMonth = initDaysOfCurrentMonth(monthDays);
 
+    return initVisibleDays(dayPrevMonth.concat(daysThisMonth));
+};
+
+const calendarDay = (state, action) => {
+    switch (action.type) {
+        case "ADD_CALENDAR_DAY":
+            const actionDay = new Date(state.dayString);
+
+            if (new Date(activeDay).getDate() === actionDay.getDate() && new Date(activeDay).getMonth() === actionDay.getMonth()) {
+                return {
+                    ...state,
+                    context: [...state.context, {
+                        activity: action.activity,
+                        approach: action.approach,
+                        amount: action.amount
+                    }]
+                }
+            } else {
+                console.log(state);
+                return state;
+            }
+        default:
+            return state;
+    }
 };
 
 const calendar = (state = [], action) => {
@@ -188,13 +253,9 @@ const calendar = (state = [], action) => {
         case "INIT_CALENDAR":
             return state;
         case "ADD_CALENDAR_DAY":
-            let newDay = {
-                activity: action.activity,
-                approach: action.approach,
-                amount: action.amount
-            };
-            console.log("Add callendar", newDay);
-            return state;
+            return state.map((c) =>
+                calendarDay(c, action)
+            );
         default:
             return state;
     }
@@ -205,9 +266,8 @@ let initCalendarState = () => {
     return {calendar: loadCalendarTracks()}
 };
 
-const pushApp = combineReducers({cards, calendar, visibilityModal});
+const pushApp = combineReducers({calendar, visibilityModal});
 const store = createStore(pushApp, initCalendarState());
-
 // store.dispatch(loadCalendarTracks());
 
 const ActivityItem = ({activity, approach, amount}) => {
@@ -235,8 +295,9 @@ const ActivitiesList = ({context}) => {
     )
 };
 
-const Card = ({dayNumber, dayThisMonth, context}) => {
+const Card = ({dayNumber, dayThisMonth, dayString, context}) => {
     let activitiesContent = null;
+
     if (dayThisMonth && context.length > 0) {
         activitiesContent = <ActivitiesList context={context}/>
     }
@@ -247,7 +308,7 @@ const Card = ({dayNumber, dayThisMonth, context}) => {
                 <button className="add" onClick={() => {
                     store.dispatch({
                         type: "OPEN_MODAL",
-                        day: dayNumber
+                        day: dayString
                     })
                 }}>+
                 </button>
@@ -258,7 +319,6 @@ const Card = ({dayNumber, dayThisMonth, context}) => {
     } else {
         return (
             <div className="day last-month">
-
             </div>
         )
     }
@@ -313,6 +373,7 @@ class Calendar extends Component {
 
         return (
             <div className="calendar">
+                {/*<button onClick={() => console.log(state.calendar)}>Show state</button>*/}
                 <CalenderHeader/>
                 <CalendarBody calendar={state.calendar}/>
             </div>
@@ -320,9 +381,6 @@ class Calendar extends Component {
     }
 }
 
-// activity: "Push app",
-//     approach: 3,
-//     amount: 10
 
 class ModalAdd extends Component {
     componentDidMount() {
@@ -351,13 +409,15 @@ class ModalAdd extends Component {
                         &#10060;
                     </button>
                     <div className="modal-content">
-                        <h3>Добавить занятие за {activeDay} ноября</h3>
+                        <h3>Добавить занятие за {new Date(activeDay).getDate()} ноября</h3>
                         <form action="">
                             <div className="form-row">
                                 <label>
                                     Выберете вид занятия:
                                 </label>
-                                <select name="" id="" onChange={(e) => activity = e.target.value}>
+                                <select name="" id="" ref={node => {
+                                    activity = node
+                                }}>
                                     {
                                         activitiesTypesList.map((activity) =>
                                             <option key={activity.id} value={activity.name}>{activity.name}</option>
@@ -382,16 +442,29 @@ class ModalAdd extends Component {
                                 }}/>
                             </div>
                             <div className="btn-wrapper">
-                                <button className="btn-submit" onClick={(e) => {
+                                <button className="btn-modal" onClick={(e) => {
                                     e.preventDefault();
                                     store.dispatch({
                                         type: "ADD_CALENDAR_DAY",
                                         day: activeDay,
-                                        activity,
+                                        activity: activity.value,
                                         approach: approach.value,
                                         amount: amount.value
                                     });
-                                }}>Добавить занятие
+
+                                    amount.value = "";
+                                    approach.value = "";
+                                }}>Добавить
+                                </button>
+                                <button className="btn-modal" onClick={(e) => {
+                                    e.preventDefault();
+                                    store.dispatch({
+                                        type: "CLOSE_MODAL"
+                                    });
+                                    amount.value = "";
+                                    approach.value = "";
+
+                                }}>Отмена
                                 </button>
                             </div>
                         </form>
