@@ -17,8 +17,6 @@ const getDatabase = () => {
     return JSON.parse(localStorage.getItem("database"));
 };
 
-console.log(getDatabase());
-
 const groupDataByMonth = (data, prop = "key") => {
     return data.reduce((groups, item) => {
         let val = item[prop];
@@ -35,7 +33,6 @@ const httpGetRecords = (month, year) => {
     if (!allRecords[`${month}/${year}`]) {
         return [];
     }
-
     return allRecords[`${month}/${year}`];
 };
 
@@ -84,7 +81,6 @@ let initDaysOfPrevMonth = (numberOfWeek) => {
 
 const initOccupiedDays = (year, month) => {
     let records = httpGetRecords(month, year);
-    console.log(records);
     let occupiedDays = [];
 
     records.forEach((item) => {
@@ -105,7 +101,7 @@ const initOccupiedDays = (year, month) => {
 let initDaysOfCurrentMonth = ({currentYear, currentMonth, daysInMonth}) => {
     let filledDays = initOccupiedDays(currentYear, currentMonth);
 
-    for (let i = 0; i <= daysInMonth-1; i++) {
+    for (let i = 0; i <= daysInMonth - 1; i++) {
         let dayString = new Date(currentYear, currentMonth, i + 1);
 
         if (!filledDays[i]) {
@@ -137,7 +133,6 @@ let initVisibleDays = (beginningOfMonth) => {
 };
 
 let loadCalendarTracks = (currentMonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
-    console.log("Curr", currentYear, currentMonth);
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
 
     let numberOfWeek = firstDayOfMonth.getDay() - 1;
@@ -169,7 +164,6 @@ const calendarDay = (state, action) => {
                     }]
                 }
             } else {
-                console.log(state);
                 return state;
             }
         default:
@@ -253,13 +247,30 @@ const Card = ({dayNumber, dayThisMonth, dayString, context}) => {
     }
 };
 
+const CalendarHeaderView = ({monthName, children}) => (
+    <div className="calendar-header">
+        <div className="month">
+            <h2 className="title">{monthName}</h2>
+            {children}
+        </div>
+        <div className="week-days">
+            <p>Понедельник</p>
+            <p>Вторник</p>
+            <p>Среда</p>
+            <p>Четверг</p>
+            <p>Пятница</p>
+            <p>Суббота</p>
+            <p>Воскресенье</p>
+        </div>
+    </div>
+);
+
 let monthsName = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 let currMonth = 10;
 
-const CalenderHeader = () => (
-    <div className="calendar-header">
-        <div className="month">
-            <h2 className="title">{monthsName[currMonth]}</h2>
+const CalenderHeader = () => {
+    return (
+        <CalendarHeaderView monthName={monthsName[currMonth]}>
             <button className="month-btn prev-month" onClick={() => {
                 currMonth--;
                 store.dispatch({
@@ -280,20 +291,11 @@ const CalenderHeader = () => (
             }}>
                 Вперед
             </button>
-        </div>
-        <div className="week-days">
-            <p>Понедельник</p>
-            <p>Вторник</p>
-            <p>Среда</p>
-            <p>Четверг</p>
-            <p>Пятница</p>
-            <p>Суббота</p>
-            <p>Воскресенье</p>
-        </div>
-    </div>
-);
+        </CalendarHeaderView>
+    )
+};
 
-const CalendarBody = ({calendar, onDayClick}) => (
+const CalendarDaysList = ({calendar}) => (
     <div className="calendar-body">
         {
             calendar.map((day, i) =>
@@ -303,8 +305,7 @@ const CalendarBody = ({calendar, onDayClick}) => (
     </div>
 );
 
-
-class Calendar extends Component {
+class CalendarBody extends Component {
     componentDidMount() {
         this.unsubscribe = store.subscribe(() => this.forceUpdate());
     }
@@ -318,14 +319,17 @@ class Calendar extends Component {
         const state = store.getState();
 
         return (
-            <div className="calendar">
-                {/*<button onClick={() => console.log(state.calendar)}>Show state</button>*/}
-                <CalenderHeader/>
-                <CalendarBody calendar={state.calendar}/>
-            </div>
+            <CalendarDaysList calendar = {state.calendar} />
         )
     }
 }
+
+const Calendar = () => (
+    <div className="calendar">
+        <CalenderHeader/>
+        <CalendarBody/>
+    </div>
+);
 
 
 class ModalAdd extends Component {
