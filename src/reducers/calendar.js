@@ -31,9 +31,11 @@ const calendar = (state = [], action) => {
         case "CHANGE_CALENDAR_MONTH":
             return loadCalendarTracks(action.month, action.year);
         case "ADD_CALENDAR_DAY":
-            return state.map((c) =>
-                calendarDay(c, action)
-            );
+            // return state.map((c) =>
+            //     calendarDay(c, action)
+            // );
+
+            return state;
         default:
             return state;
     }

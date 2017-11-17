@@ -16,7 +16,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: () => {
-        console.log("ownProps", ownProps.dayString);
         dispatch(openModalWindow(ownProps.dayString))
     }
 });

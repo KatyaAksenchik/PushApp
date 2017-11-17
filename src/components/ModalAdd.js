@@ -39,7 +39,7 @@ const FormRowSelect = ({children, activities, onSelectChange}) => {
     )
 };
 
-const ModalAdd = ({visibility, onAddBtnClick, onCancelBtnClick}) => {
+const ModalAdd = ({visibility, activeDay, activeMonth, onAddBtnClick, onCancelBtnClick}) => {
 
     let activityItem = {
         activity: null,
@@ -52,9 +52,11 @@ const ModalAdd = ({visibility, onAddBtnClick, onCancelBtnClick}) => {
             display: visibility ? "flex" : "none"
         }}>
             <div className="modal">
-                <button className="modal-close" onClick={onCancelBtnClick}><span role="img" aria-label="Close">&#10060;</span></button>
+                <button className="modal-close" onClick={onCancelBtnClick}><span role="img"
+                                                                                 aria-label="Close">&#10060;</span>
+                </button>
                 <div className="modal-content">
-                    <h3>Добавить занятие</h3>
+                    <h3>Добавить занятие за {activeDay}.{activeMonth}</h3>
                     <FormRowSelect activities={ACTIVITIES_TYPES_LIST} onSelectChange={(input) => {
                         activityItem.activity = input;
                     }}>
