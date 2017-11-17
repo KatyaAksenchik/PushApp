@@ -6,15 +6,17 @@ import CalendarHeaderView from "../components/CalendarHeaderView";
 
 let currMonth = 10;
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state, ownProps) => ({
     monthName: MONTHS_NAME[currMonth]
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     prevBtnClick: () => {
+        currMonth--;
         dispatch(changeMonth(currMonth))
     },
     nextBtnClick: () => {
+        currMonth++;
         dispatch(changeMonth(currMonth))
     }
 });

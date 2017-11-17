@@ -15,6 +15,8 @@ $calendar-header-days-height: 52px;
 $calendar-header-height: $calendar-header-name-height + $calendar-header-days-height;
 
 $modal-cross-position-size: 5px;
+$font-size-basic: 1rem;
+$font-size-sm: 0.875rem;
 
 @mixin calendar-flex {
     display: flex;
@@ -141,6 +143,11 @@ body {
         .activity-item {
             display: flex;
             justify-content: space-between;
+            white-space: nowrap;
+
+            .name {
+                font-size: $font-size-sm;
+            }
         }
     }
 }

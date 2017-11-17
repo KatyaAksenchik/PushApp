@@ -28,3 +28,9 @@ export const httpGetRecords = (month, year) => {
     }
     return allRecords[`${month}/${year}`];
 };
+
+export const httpPostRecord = (item) => {
+    let database = getDatabase();
+    database.push(item);
+    setDatabase(database);
+};

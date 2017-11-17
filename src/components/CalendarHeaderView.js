@@ -1,6 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 
 const CalendarHeaderView = ({monthName, prevBtnClick, nextBtnClick}) => (
     <div className="calendar-header">
@@ -20,12 +18,5 @@ const CalendarHeaderView = ({monthName, prevBtnClick, nextBtnClick}) => (
         </div>
     </div>
 );
-
-
-CalendarHeaderView.propTypes = {
-    monthName: PropTypes.string.isRequired,
-    prevBtnClick: PropTypes.func.isRequired,
-    nextBtnClick: PropTypes.func.isRequired
-};
 
 export default CalendarHeaderView;

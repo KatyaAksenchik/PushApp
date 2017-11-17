@@ -1,100 +1,84 @@
 import React from 'react';
-import {Component} from 'react';
 import {ACTIVITIES_TYPES_LIST} from "../shared/const";
-import {store} from "../index";
-import {activeDay} from "../reducers/visibilityModal"
 
-class ModalAdd extends Component {
-    componentDidMount() {
-        this.unsubscribe = store.subscribe(() => this.forceUpdate());
-    }
+const FormRowInput = ({children, onInputChange}) => {
+    let text = null;
 
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
+    return (
+        <div className="form-row">
+            <label>
+                {children}
+            </label>
+            <input type="text" ref={node => {
+                text = node;
+                onInputChange(text);
+            }}/>
+        </div>
+    )
+};
 
-    render() {
-        const props = this.props;
-        const state = store.getState();
+const FormRowSelect = ({children, activities, onSelectChange}) => {
+    let activeOption;
 
-        let activity, amount, approach;
-        return (
-            <div className="overlay" style={{
-                display: state.visibilityModal ? "flex" : "none"
+    return (
+        <div className="form-row">
+            <label>
+                {children}
+            </label>
+            <select ref={node => {
+                activeOption = node;
+                onSelectChange(activeOption);
             }}>
-                <div className="modal">
-                    <button className="modal-close" onClick={() =>
-                        store.dispatch({
-                            type: "CLOSE_MODAL"
-                        })
-                    }>
-                        &#10060;
-                    </button>
-                    <div className="modal-content">
-                        <h3>Добавить занятие за {new Date(activeDay).getDate()} ноября</h3>
-                        <form action="">
-                            <div className="form-row">
-                                <label>
-                                    Выберете вид занятия:
-                                </label>
-                                <select name="" id="" ref={node => {
-                                    activity = node
-                                }}>
-                                    {
-                                        ACTIVITIES_TYPES_LIST.map((activity) =>
-                                            <option key={activity.id} value={activity.name}>{activity.name}</option>
-                                        )
-                                    }
-                                </select>
-                            </div>
-                            <div className="form-row">
-                                <label>
-                                    Количество подходов:
-                                </label>
-                                <input type="text" ref={node => {
-                                    approach = node
-                                }}/>
-                            </div>
-                            <div className="form-row">
-                                <label>
-                                    Количество раз в подходе:
-                                </label>
-                                <input type="text" ref={node => {
-                                    amount = node
-                                }}/>
-                            </div>
-                            <div className="btn-wrapper">
-                                <button className="btn-modal" onClick={(e) => {
-                                    e.preventDefault();
-                                    store.dispatch({
-                                        type: "ADD_CALENDAR_DAY",
-                                        day: activeDay,
-                                        activity: activity.value,
-                                        approach: approach.value,
-                                        amount: amount.value
-                                    });
+                {
+                    activities.map((activity) =>
+                        <option key={activity.id} value={activity.name}>{activity.name}</option>
+                    )
+                }
+            </select>
+        </div>
+    )
+};
 
-                                    amount.value = "";
-                                    approach.value = "";
-                                }}>Добавить
-                                </button>
-                                <button className="btn-modal" onClick={(e) => {
-                                    e.preventDefault();
-                                    store.dispatch({
-                                        type: "CLOSE_MODAL"
-                                    });
-                                    amount.value = "";
-                                    approach.value = "";
+const ModalAdd = ({visibility, onAddBtnClick, onCancelBtnClick}) => {
 
-                                }}>Отмена
-                                </button>
-                            </div>
-                        </form>
+    let activityItem = {
+        activity: null,
+        approach: null,
+        amount: null
+    };
+
+    return (
+        <div className="overlay" style={{
+            display: visibility ? "flex" : "none"
+        }}>
+            <div className="modal">
+                <button className="modal-close" onClick={onCancelBtnClick}><span role="img" aria-label="Close">&#10060;</span></button>
+                <div className="modal-content">
+                    <h3>Добавить занятие</h3>
+                    <FormRowSelect activities={ACTIVITIES_TYPES_LIST} onSelectChange={(input) => {
+                        activityItem.activity = input;
+                    }}>
+                        Выберете вид занятия:
+                    </FormRowSelect>
+
+                    <FormRowInput onInputChange={(input) => {
+                        activityItem.approach = input;
+                    }}>Количество подходов:</FormRowInput>
+
+                    <FormRowInput onInputChange={(input) => {
+                        activityItem.amount = input;
+                    }}>Количество раз в подходе:</FormRowInput>
+
+                    <div className="btn-wrapper">
+                        <button className="btn-modal" onClick={(e) => onAddBtnClick(e, activityItem)}>Добавить
+                        </button>
+                        <button className="btn-modal" onClick={onCancelBtnClick}>Отмена
+                        </button>
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+        </div>
+    )
+};
 
 export default ModalAdd;

@@ -2,22 +2,21 @@ import {connect} from 'react-redux'
 import {openModalWindow} from "../actions/index";
 import ActiveDay from '../components/ActiveDay'
 
-// const initActivitiesList = (context) => {
-//     if (context.length > 0) {
-//         return context;
-//     }
-//     return [];
-// };
+const initActivitiesList = (context) => {
+    if (context.length > 0) {
+        return context;
+    }
+    return [];
+};
 
-const mapStateToProps = (ownProps) => ({
-    dayNumber: ownProps.dayNumber
-    //,
-    // context: initActivitiesList(ownProps.context)
+const mapStateToProps = (state, ownProps) => ({
+    dayNumber: ownProps.dayNumber,
+    context: initActivitiesList(ownProps.context)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: () => {
-        // console.log("ownProps", ownProps);
+        console.log("ownProps", ownProps.dayString);
         dispatch(openModalWindow(ownProps.dayString))
     }
 });

@@ -90,7 +90,10 @@ body {
     padding-left: 0; }
     .calendar-body .activities-list .activity-item {
       display: flex;
-      justify-content: space-between; }
+      justify-content: space-between;
+      white-space: nowrap; }
+      .calendar-body .activities-list .activity-item .name {
+        font-size: 0.875rem; }
 
 .overlay {
   position: fixed;
