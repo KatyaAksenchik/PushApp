@@ -22,10 +22,10 @@ const initOccupiedDays = (year, month) => {
         if (!occupiedDays[index]) {
             occupiedDays[index] = {
                 "dayThisMonth": true,
-                "context": [item.exercise]
+                "exercisesTracks": [item.exercise]
             };
         } else {
-            occupiedDays[index].context.push(item.exercise)
+            occupiedDays[index].exercisesTracks.push(item.exercise)
         }
     });
     return occupiedDays;
@@ -42,7 +42,7 @@ const initDaysOfCurrentMonth = ({currentYear, currentMonth, daysInMonth}) => {
                 dayThisMonth: true,
                 dayNumber: i + 1,
                 dayString: dayString,
-                context: []
+                exercisesTracks: []
             };
         } else {
             filledDays[i] = {

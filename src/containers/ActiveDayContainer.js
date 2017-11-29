@@ -1,17 +1,10 @@
 import {connect} from 'react-redux'
 import {openModalWindow} from "../actions/index";
 import ActiveDay from '../components/ActiveDay'
-
-const initActivitiesList = (context) => {
-    if (context.length > 0) {
-        return context;
-    }
-    return [];
-};
+import {getActivitiesList} from "../shared/getFromState"
 
 const mapStateToProps = (state, ownProps) => ({
-    dayNumber: ownProps.dayNumber,
-    context: initActivitiesList(ownProps.context)
+    exercisesTracks: getActivitiesList(ownProps)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

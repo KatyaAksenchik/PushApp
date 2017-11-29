@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from "./Card";
+import PropTypes from 'prop-types'
 
 
 const CalendarDaysList = ({calendar}) => (
@@ -11,6 +12,10 @@ const CalendarDaysList = ({calendar}) => (
         }
     </div>
 );
+
+CalendarDaysList.propTypes = {
+    calendar:  PropTypes.array
+};
 
 
 export default CalendarDaysList;

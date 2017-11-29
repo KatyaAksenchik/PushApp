@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 const ActivityItem = ({activity, approach, amount}) => {
     return (
@@ -13,16 +14,26 @@ const ActivityItem = ({activity, approach, amount}) => {
     )
 };
 
-const ActivitiesList = ({context}) => {
+ActivityItem.propTypes = {
+    activity: PropTypes.string,
+    approach: PropTypes.string,
+    amount: PropTypes.string
+};
+
+const ActivitiesList = ({exercisesTracks}) => {
     return (
         <ul className="activities-list">
             {
-                context.map((item, i) =>
+                exercisesTracks.map((item, i) =>
                     <ActivityItem key={i} {...item}/>
                 )
             }
         </ul>
     )
+};
+
+ActivitiesList.propTypes = {
+    exercisesTracks: PropTypes.array
 };
 
 export default ActivitiesList;
