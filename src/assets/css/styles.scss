@@ -4,6 +4,8 @@
 $c-blue: blue;
 $c-light-grey: #f3f0eb;
 
+$font-family-basic: "Tahoma", "Geneva", sans-serif;
+
 $day-box-width: 100%/7;
 $day-box-height: 180px;
 $day-box-add-btn-size: 25px;
@@ -34,7 +36,7 @@ $font-size-sm: 0.875rem;
 }
 
 body {
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: $font-family-basic;
     margin: 0;
 }
 
@@ -59,7 +61,7 @@ body {
 
             padding: 0.5em 1.2em;
             font-size: 12px;
-            font-family: "Brush Script MT", cursive;
+            font-family: $font-family-basic;
             text-transform: uppercase;
             background-color: transparent;
             border: solid 1px black;
@@ -205,7 +207,9 @@ body {
         select {
             width: 50%;
             height: 30px;
-            font-family: "Brush Script MT", cursive;
+            padding-left: 0.5em;
+            font-family: $font-family-basic;
+            font-size: $font-size-sm;
         }
 
         .btn-wrapper {
@@ -217,7 +221,7 @@ body {
             margin-left: 5px;
             margin-right: 5px;
             padding: 6px 0;
-            font-family: "Brush Script MT", cursive;
+            font-family: $font-family-basic;
             text-transform: uppercase;
             background: none;
             border: solid 1px black;

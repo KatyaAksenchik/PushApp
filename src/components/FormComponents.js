@@ -2,31 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 export const FormRowInput = ({children, onInputChange}) => {
-    let text = null;
-
     return (
         <div className="form-row">
             <label>
                 {children}
             </label>
-            <input type="text" ref={node => {
-                text = node;
-                onInputChange(text);
-            }}/>
+            <input type="text" onChange={(e) => onInputChange(e.target.value)}/>
         </div>
     )
 };
-
-// export const FormRowInput = ({children, onInputChange}) => {
-//     return (
-//         <div className="form-row">
-//             <label>
-//                 {children}
-//             </label>
-//             <input type="text" onChange={onInputChange(e)}/>
-//         </div>
-//     )
-// };
 
 FormRowInput.propTypes = {
     children: PropTypes.string,
@@ -35,20 +19,18 @@ FormRowInput.propTypes = {
 
 
 export const FormRowSelect = ({children, activities, onSelectChange}) => {
-    let activeOption;
-
     return (
         <div className="form-row">
             <label>
                 {children}
             </label>
-            <select ref={node => {
-                activeOption = node;
-                onSelectChange(activeOption);
-            }}>
+            <select onChange={(e) => onSelectChange(e.target)}>
+                <option value="Выберите значение" data-default = {true}>Выберите значение</option>
                 {
                     activities.map((activity) =>
-                        <option key={activity.id} value={activity.name}>{activity.name}</option>
+                        <option key={activity.id} data-default = {false} value={activity.name}>
+                            {activity.name}
+                        </option>
                     )
                 }
             </select>

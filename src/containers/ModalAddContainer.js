@@ -1,22 +1,13 @@
 import {connect} from 'react-redux'
 import {addActivity, closeModalWindow} from "../actions/index";
 import ModalAdd from '../components/ModalAdd'
-import {MONTHS_NAME} from '../shared/const'
+import {getMonthName, getDate, getModalVisibility} from '../shared/getFromState'
 
-
-const getMonthName = (date) => {
-    const month = (new Date(date)).getMonth();
-    return month + 1;
-};
-
-const getDate = (date) => {
-    return (new Date(date)).getDate();
-};
 
 const mapStateToProps = (state) => ({
-    visibility: state.utils.modal,
-    activeDay: getDate(state.utils.day),
-    activeMonth: getMonthName(state.utils.day)
+    visibility: getModalVisibility(state),
+    activeDay: getDate(state),
+    activeMonth: getMonthName(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -1,5 +1,3 @@
-let today = new Date();
-
 const utils = (state = {}, action) => {
     switch (action.type) {
         case 'OPEN_MODAL':
