@@ -1,7 +1,10 @@
-export const changeMonth = (month, year = 2017) => ({
+
+export const changeMonth = (month, year, operationType, activeMonth) => ({
     type: "CHANGE_CALENDAR_MONTH",
     month,
-    year
+    year,
+    operationType,
+    activeMonth
 });
 
 

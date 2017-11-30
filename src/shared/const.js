@@ -15,3 +15,9 @@ export const ACTIVITIES_TYPES_LIST = [{
 
 
 export const MONTHS_NAME = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+
+
+export const MONTHS_OPERATION_TYPES = {
+    prevMonth: "DECREMENT",
+    nextMonth: "INCREMENT"
+};

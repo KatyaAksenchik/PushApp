@@ -81,3 +81,13 @@ export const loadCalendarTracks = (currentMonth = (new Date()).getMonth(), curre
 
     return initVisibleDays(dayPrevMonth.concat(daysThisMonth));
 };
+
+
+let today = new Date();
+
+export const loadActiveMonth = () => {
+    return {
+        activeMonth: today.getMonth(),
+        activeYear: today.getFullYear(),
+    }
+};

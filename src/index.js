@@ -5,7 +5,7 @@ import {createStore} from 'redux';
 
 import ModalAddContainer from "./containers/ModalAddContainer";
 import Calendar from "./components/Calendar"
-import {loadCalendarTracks} from "./reducers/tracks"
+import {loadCalendarTracks, loadActiveMonth} from "./reducers/tracks"
 import pushApp from "./reducers/index"
 
 //styles
@@ -14,7 +14,10 @@ import registerServiceWorker from './registerServiceWorker';
 
 
 let initCalendarState = () => {
-    return {calendar: loadCalendarTracks()}
+    return {
+        activeMonth: loadActiveMonth(),
+        calendar: loadCalendarTracks()
+    }
 };
 
 const store = createStore(pushApp, initCalendarState());

@@ -29,6 +29,8 @@ import {loadCalendarTracks} from './tracks';
 const calendar = (state = [], action) => {
     switch (action.type) {
         case "CHANGE_CALENDAR_MONTH":
+            // console.log(store.getState());
+
             return loadCalendarTracks(action.month, action.year);
         case "ADD_CALENDAR_DAY":
             // return state.map((c) =>

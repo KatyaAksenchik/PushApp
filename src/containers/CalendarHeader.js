@@ -1,23 +1,21 @@
 import {connect} from 'react-redux'
-import {MONTHS_NAME} from "../shared/const";
+import {MONTHS_OPERATION_TYPES} from "../shared/const";
 import {changeMonth} from "../actions/index";
 import CalendarHeaderView from "../components/CalendarHeaderView";
+import {getMonthName} from "../shared/getFromState"
 
-
-let currMonth = 10;
 
 const mapStateToProps = (state, ownProps) => ({
-    monthName: MONTHS_NAME[currMonth]
+    monthName: getMonthName(state),
+    active: state.activeMonth
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     prevBtnClick: () => {
-        currMonth--;
-        dispatch(changeMonth(currMonth))
+        dispatch(changeMonth(10, 2017, MONTHS_OPERATION_TYPES.prevMonth, ownProps.active))
     },
     nextBtnClick: () => {
-        currMonth++;
-        dispatch(changeMonth(currMonth))
+        dispatch(changeMonth(10, 2017, MONTHS_OPERATION_TYPES.nextMonth))
     }
 });
 
