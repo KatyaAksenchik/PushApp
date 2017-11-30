@@ -31,11 +31,11 @@ const initOccupiedDays = (year, month) => {
     return occupiedDays;
 };
 
-const initDaysOfCurrentMonth = ({currentYear, currentMonth, daysInMonth}) => {
-    let filledDays = initOccupiedDays(currentYear, currentMonth);
+const initDaysOfCurrentMonth = ({currentYear, monthOrder, daysInMonth}) => {
+    let filledDays = initOccupiedDays(currentYear, monthOrder);
 
     for (let i = 0; i <= daysInMonth - 1; i++) {
-        let dayString = new Date(currentYear, currentMonth, i + 1);
+        let dayString = new Date(currentYear, monthOrder, i + 1);
 
         if (!filledDays[i]) {
             filledDays[i] = {
