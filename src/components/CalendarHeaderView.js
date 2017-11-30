@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-const CalendarHeaderView = ({monthName, prevBtnClick, nextBtnClick, active}) => (
+const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick}) => (
     <div className="calendar-header">
         <div className="month">
-            <h2 className="title">{monthName}</h2>
+            <h2 className="title">{monthName} {year}</h2>
             <button className="month-btn prev-month" onClick={prevBtnClick}>Назад</button>
             <button className="month-btn next-month" onClick={nextBtnClick}>Вперед</button>
         </div>
@@ -18,7 +18,6 @@ const CalendarHeaderView = ({monthName, prevBtnClick, nextBtnClick, active}) => 
             <p>Суббота</p>
             <p>Воскресенье</p>
         </div>
-        <div>{active.activeMonth}</div>
     </div>
 );
 

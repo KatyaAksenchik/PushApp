@@ -1,5 +1,56 @@
 import {loadCalendarTracks} from './tracks';
-// import {activeDay} from "./visibilityModal"
+import {getMonthOrder, getCurrentYear, checkIfMonthThisYear} from "../shared/getFromState"
+
+const initPrevNextMonthInfo = (state, operationType) => {
+    let order = getMonthOrder(state),
+        year = getCurrentYear(state);
+
+    // order = (operationType === "NEXT") ? order++ : order--;
+    // Почему так не сработало??
+
+    if (operationType === "NEXT") {
+        order++
+    }
+    else {
+        order--
+    }
+
+    const data = checkIfMonthThisYear(order, year);
+
+    return {
+        monthInfo: data,
+        calendarDays: loadCalendarTracks(data)
+    }
+};
+
+
+const calendar = (state = {}, action) => {
+    switch (action.type) {
+
+        case "SWITCH_TO_NEXT_MONTH":
+            return initPrevNextMonthInfo(state, "NEXT");
+        case "SWITCH_TO_PREV_MONTH":
+            return initPrevNextMonthInfo(state, "PREV");
+
+        default:
+            return state;
+    }
+};
+
+export default calendar;
+
+
+/*
+ state = {
+     monthInfo: {
+         monthOrder: 10,
+         currentYear: 2017
+     }
+     calendarDays : []
+ }
+ */
+
+
 
 // const calendarDay = (state, action) => {
 //     switch (action.type) {
@@ -25,22 +76,3 @@ import {loadCalendarTracks} from './tracks';
 //             return state;
 //     }
 // };
-
-const calendar = (state = [], action) => {
-    switch (action.type) {
-        case "CHANGE_CALENDAR_MONTH":
-            // console.log(store.getState());
-
-            return loadCalendarTracks(action.month, action.year);
-        case "ADD_CALENDAR_DAY":
-            // return state.map((c) =>
-            //     calendarDay(c, action)
-            // );
-
-            return state;
-        default:
-            return state;
-    }
-};
-
-export default calendar;

@@ -3,7 +3,7 @@ import CalendarDaysList from '../components/CalendarDaysList'
 
 
 const mapStateToProps = (state) => ({
-    calendar: state.calendar
+    calendar: state.calendar.calendarDays
 });
 
 const CalendarBody = connect(

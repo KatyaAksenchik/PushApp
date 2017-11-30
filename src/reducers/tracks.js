@@ -65,16 +65,16 @@ const initVisibleDays = (beginningOfMonth) => {
     return beginningOfMonth;
 };
 
-export const loadCalendarTracks = (currentMonth = (new Date()).getMonth(), currentYear = (new Date()).getFullYear()) => {
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+export const loadCalendarTracks = ({monthOrder, currentYear}) => {
+    const firstDayOfMonth = new Date(currentYear, monthOrder, 1);
 
     let numberOfWeek = firstDayOfMonth.getDay() - 1;
     if (numberOfWeek === -1) {
         numberOfWeek = 6;
     }
 
-    const daysInMonth = (new Date(currentYear, currentMonth + 1, 0)).getDate();
-    const monthDays = {currentYear, currentMonth, daysInMonth};
+    const daysInMonth = (new Date(currentYear, monthOrder + 1, 0)).getDate();
+    const monthDays = {currentYear, monthOrder, daysInMonth};
 
     let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
     let daysThisMonth = initDaysOfCurrentMonth(monthDays);
@@ -85,9 +85,11 @@ export const loadCalendarTracks = (currentMonth = (new Date()).getMonth(), curre
 
 let today = new Date();
 
+
+
 export const loadActiveMonth = () => {
     return {
-        activeMonth: today.getMonth(),
-        activeYear: today.getFullYear(),
+        monthOrder: today.getMonth(),
+        currentYear: today.getFullYear(),
     }
 };

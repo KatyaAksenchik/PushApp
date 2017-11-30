@@ -1,12 +1,10 @@
-
-export const changeMonth = (month, year, operationType, activeMonth) => ({
-    type: "CHANGE_CALENDAR_MONTH",
-    month,
-    year,
-    operationType,
-    activeMonth
+export const switchToNextMonth = () => ({
+    type: "SWITCH_TO_NEXT_MONTH"
 });
 
+export const switchToPrevMonth = () => ({
+    type: "SWITCH_TO_PREV_MONTH"
+});
 
 export const openModalWindow = (dayString) => ({
     type: "OPEN_MODAL",

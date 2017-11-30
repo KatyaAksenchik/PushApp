@@ -1,11 +1,9 @@
 import {combineReducers} from 'redux'
 import calendar from './calendar'
-// import visibilityModal from './visibilityModal'
 import utils from  './utils'
-import activeMonth from "./activeCalendar"
+// import visibilityModal from './visibilityModal'
 
 const pushApp = combineReducers({
-    activeMonth,
     calendar,
     utils
     // visibilityModal
