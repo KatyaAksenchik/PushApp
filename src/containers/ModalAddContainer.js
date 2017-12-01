@@ -12,18 +12,6 @@ const mapStateToProps = (state) => ({
     dayString: getActiveStringDate(state)
 });
 
-
-// {
-//     id: 0,
-//         date: "Tue Oct 10 2017 00:00:00 GMT+0300 (Belarus Standard Time)",
-//     key: "09/2017",
-//     exercise: {
-//     activity: "Прыжки",
-//         approach: 10,
-//         amount: 5
-// }
-// }
-
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onAddBtnClick: (e, activityItem, dayString) => {
         e.preventDefault();

@@ -1,4 +1,4 @@
-import {loadCalendarTracks} from './tracks';
+import {loadCalendarTracks,loadActiveMonth} from './tracks';
 import {getMonthOrder, getCurrentYear, checkIfMonthThisYear} from "../shared/getFromState"
 
 const initPrevNextMonthInfo = (state, operationType) => {
@@ -27,10 +27,18 @@ const initPrevNextMonthInfo = (state, operationType) => {
 const calendar = (state = {}, action) => {
     switch (action.type) {
         case "ADD_ACTIVITY":
-            const currMonthInfo = state.monthInfo;
+            const activeMonthInfo = state.monthInfo;
+
             return {
                 ...state,
-                calendarDays: loadCalendarTracks(currMonthInfo)
+                calendarDays: loadCalendarTracks(activeMonthInfo)
+            };
+        case "UPDATE_CALENDAR_TO_CURRENT":
+            const currentMonthInfo = loadActiveMonth();
+
+            return {
+                monthInfo:currentMonthInfo,
+                calendarDays: loadCalendarTracks(currentMonthInfo)
             };
         case "SWITCH_TO_NEXT_MONTH":
             return initPrevNextMonthInfo(state, "NEXT");

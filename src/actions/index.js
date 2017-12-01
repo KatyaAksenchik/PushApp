@@ -18,3 +18,7 @@ export const closeModalWindow = () => ({
 export const addActivity = () => ({
     type: "ADD_ACTIVITY"
 });
+
+export const updateCalendarToCurrentMonth = () => ({
+    type: "UPDATE_CALENDAR_TO_CURRENT"
+});

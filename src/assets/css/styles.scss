@@ -3,6 +3,7 @@
 //@import "components/components";
 $c-blue: blue;
 $c-light-grey: #f3f0eb;
+$c-green: #008000;
 
 $font-family-basic: "Tahoma", "Geneva", sans-serif;
 
@@ -35,6 +36,10 @@ $font-size-sm: 0.875rem;
     margin: 0;
 }
 
+.margin-left-auto {
+    margin-left: auto;
+}
+
 body {
     font-family: $font-family-basic;
     margin: 0;
@@ -44,6 +49,7 @@ body {
     padding: 10px;
     max-width: 1140px;
     height: calc(100vh - 20px);
+    margin: 0 auto;
 }
 
 .calendar-header {
@@ -53,12 +59,13 @@ body {
 
     .month {
         position: relative;
+        display: flex;
+        align-items: center;
         height: $calendar-header-name-height;
+        padding: 0 20px;
+        border-bottom: solid 2px black;
 
         .month-btn {
-            position: absolute;
-            top: 50%;
-
             padding: 0.5em 1.2em;
             font-size: 12px;
             font-family: $font-family-basic;
@@ -66,16 +73,17 @@ body {
             background-color: transparent;
             border: solid 1px black;
             border-radius: 20px;
-            transform: translateY(-50%);
             cursor: pointer;
 
-            &.next-month {
-                right: 20px;
+            &.curr-month {
+                color: #fff;
+                background-color: $c-green;
+                border-color: $c-green;
             }
+        }
 
-            &.prev-month {
-                left: 20px;
-            }
+        .center-block {
+            margin: 0 10px 0 25%;
         }
     }
 
@@ -83,7 +91,6 @@ body {
         margin: 0;
         line-height: 2em;
         text-align: center;
-        border-bottom: solid 2px black;
     }
 
     .week-days {
@@ -172,8 +179,7 @@ body {
     position: relative;
     flex-grow: 1;
     max-width: 600px;
-    height: 300px;
-    padding: 40px 20px 10px;
+    padding: 40px 20px 35px;
     background-color: #fff;
 
     .modal-close {

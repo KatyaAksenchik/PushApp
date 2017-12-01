@@ -2,12 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick}) => (
+const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick,currentBtnClick}) => (
     <div className="calendar-header">
         <div className="month">
-            <h2 className="title">{monthName} {year}</h2>
-            <button className="month-btn prev-month" onClick={prevBtnClick}>Назад</button>
-            <button className="month-btn next-month" onClick={nextBtnClick}>Вперед</button>
+            <div>
+                <button className="month-btn" onClick={prevBtnClick}>Назад</button>
+            </div>
+            <div className="center-block">
+                <button className="month-btn curr-month" onClick={currentBtnClick}>Текущий месяц</button>
+            </div>
+            <div>
+                <h2 className="title">{monthName} {year}</h2>
+            </div>
+            <div className="margin-left-auto">
+                <button className="month-btn" onClick={nextBtnClick}>Вперед</button>
+            </div>
         </div>
         <div className="week-days">
             <p>Понедельник</p>

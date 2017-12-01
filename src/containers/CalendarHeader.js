@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {switchToNextMonth, switchToPrevMonth} from "../actions/index";
+import {switchToNextMonth, switchToPrevMonth, updateCalendarToCurrentMonth} from "../actions/index";
 import CalendarHeaderView from "../components/CalendarHeaderView";
 import {getMonthName, getYear} from "../shared/getFromState"
 
@@ -16,6 +16,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     nextBtnClick: () => {
         dispatch(switchToNextMonth())
+    },
+    currentBtnClick: () =>{
+        dispatch(updateCalendarToCurrentMonth())
     }
 });
 
