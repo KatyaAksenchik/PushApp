@@ -1,14 +1,14 @@
 import {httpGetRecords} from "../shared/http"
 
 const initDaysOfPrevMonth = (numberOfWeek) => {
-    let caledarDaysStart = [];
+    let calendarDaysStart = [];
 
     if (numberOfWeek !== 0) {
-        caledarDaysStart.length = numberOfWeek;
-        caledarDaysStart.fill({"dayThisMonth": false}, 0, numberOfWeek);
+        calendarDaysStart.length = numberOfWeek;
+        calendarDaysStart.fill({"dayThisMonth": false}, 0, numberOfWeek);
     }
 
-    return caledarDaysStart;
+    return calendarDaysStart;
 };
 
 
@@ -84,8 +84,6 @@ export const loadCalendarTracks = ({monthOrder, currentYear}) => {
 
 
 let today = new Date();
-
-
 
 export const loadActiveMonth = () => {
     return {

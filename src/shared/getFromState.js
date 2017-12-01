@@ -14,6 +14,10 @@ export const getDate = ({utils}) => {
     return (new Date(utils.day)).getDate();
 };
 
+export const getActiveStringDate = ({utils}) => {
+    return utils.day;
+};
+
 export const getModalVisibility = ({utils}) => {
     return utils.modal;
 };

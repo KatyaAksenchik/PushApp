@@ -15,9 +15,6 @@ export const closeModalWindow = () => ({
     type: "CLOSE_MODAL"
 });
 
-export const addActivity = ({activity, approach, amount}) => ({
-    type: "ADD_CALENDAR_DAY",
-    activity,
-    approach,
-    amount
+export const addActivity = () => ({
+    type: "ADD_ACTIVITY"
 });

@@ -26,7 +26,12 @@ const initPrevNextMonthInfo = (state, operationType) => {
 
 const calendar = (state = {}, action) => {
     switch (action.type) {
-
+        case "ADD_ACTIVITY":
+            const currMonthInfo = state.monthInfo;
+            return {
+                ...state,
+                calendarDays: loadCalendarTracks(currMonthInfo)
+            };
         case "SWITCH_TO_NEXT_MONTH":
             return initPrevNextMonthInfo(state, "NEXT");
         case "SWITCH_TO_PREV_MONTH":
@@ -42,37 +47,10 @@ export default calendar;
 
 /*
  state = {
-     monthInfo: {
-         monthOrder: 10,
-         currentYear: 2017
-     }
-     calendarDays : []
+ monthInfo: {
+ monthOrder: 10,
+ currentYear: 2017
+ }
+ calendarDays : []
  }
  */
-
-
-
-// const calendarDay = (state, action) => {
-//     switch (action.type) {
-//         case "ADD_CALENDAR_DAY":
-//             console.log(action);
-//             // console.log(action.activity, action.approach, action.amount);
-//             return state;
-//         // const actionDay = new Date(state.dayString);
-//         //
-//         // if (new Date(activeDay).getDate() === actionDay.getDate() && new Date(activeDay).getMonth() === actionDay.getMonth()) {
-//         //     return {
-//         //         ...state,
-//         //         context: [...state.context, {
-//         //             activity: action.activity,
-//         //             approach: action.approach,
-//         //             amount: action.amount
-//         //         }]
-//         //     }
-//         // } else {
-//         //     return state;
-//         // }
-//         default:
-//             return state;
-//     }
-// };

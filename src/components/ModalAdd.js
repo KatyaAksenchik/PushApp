@@ -62,7 +62,7 @@ class ModalAdd extends React.Component {
 
                             <div className="btn-wrapper">
                                 <button className="btn-modal" onClick={(e) =>
-                                    this.props.onAddBtnClick(e, this.state.activityItem)}>
+                                    this.props.onAddBtnClick(e, this.state.activityItem, this.props.dayString)}>
                                     Добавить
                                 </button>
                                 <button className="btn-modal" onClick={this.props.onCancelBtnClick}>

@@ -34,3 +34,10 @@ export const httpPostRecord = (item) => {
     database.push(item);
     setDatabase(database);
 };
+
+export const httpFormRecord = (date, exercise) => {
+    const id = getDatabase().length + 1;
+    const key = `${date.getMonth()}/${date.getFullYear()}`;
+
+    return {id, date, key, exercise}
+};
