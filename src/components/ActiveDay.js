@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+
 import ActivitiesList from './ActivitiesList'
 
 const ActiveDay = ({dayNumber, onClick, exercisesTracks}) => (
@@ -11,9 +12,9 @@ const ActiveDay = ({dayNumber, onClick, exercisesTracks}) => (
 );
 
 ActiveDay.propTypes = {
-    dayNumber: PropTypes.number.isRequired,
+    dayNumber: PropTypes.number,
     onClick: PropTypes.func,
-    exercisesTracks:  PropTypes.array
+    exercisesTracks: PropTypes.array
 };
 
 export default ActiveDay;

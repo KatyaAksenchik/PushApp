@@ -1,4 +1,8 @@
-export const ACTIVITIES_TYPES_LIST = [{
+export const ACTIVITIES_TYPES_LIST = [
+    {
+        id: 0,
+        name: "Выберите значение"
+    }, {
         id: 1,
         name: "Отжимания"
     }, {
@@ -10,8 +14,8 @@ export const ACTIVITIES_TYPES_LIST = [{
     }, {
         id: 4,
         name: "Приседание"
-    }]
-;
+    }
+];
 
 
 export const MONTHS_NAME = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];

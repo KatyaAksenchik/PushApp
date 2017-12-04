@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 
-const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick,currentBtnClick}) => (
+const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick, currentBtnClick}) => (
     <div className="calendar-header">
         <div className="month">
             <div>
@@ -32,8 +32,10 @@ const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick,current
 
 CalendarHeaderView.propTypes = {
     monthName: PropTypes.string,
+    year: PropTypes.number,
     prevBtnClick: PropTypes.func,
     nextBtnClick: PropTypes.func,
+    currentBtnClick: PropTypes.func
 };
 
 export default CalendarHeaderView;

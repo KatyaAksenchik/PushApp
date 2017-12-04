@@ -17,7 +17,7 @@ const initOccupiedDays = (year, month) => {
     let occupiedDays = [];
 
     records.forEach((item) => {
-        const index = new Date(item.date).getDate();
+        const index = new Date(item.date).getDate()-1;
 
         if (!occupiedDays[index]) {
             occupiedDays[index] = {
@@ -74,7 +74,11 @@ export const loadCalendarTracks = ({monthOrder, currentYear}) => {
     }
 
     const daysInMonth = (new Date(currentYear, monthOrder + 1, 0)).getDate();
-    const monthDays = {currentYear, monthOrder, daysInMonth};
+    const monthDays = {
+        currentYear,
+        monthOrder,
+        daysInMonth
+    };
 
     let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
     let daysThisMonth = initDaysOfCurrentMonth(monthDays);

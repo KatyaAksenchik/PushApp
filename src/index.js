@@ -27,12 +27,16 @@ let initCalendarState = () => {
     }
 };
 
-const store = createStore(pushApp, initCalendarState());
+const store = createStore(
+    pushApp,
+    initCalendarState(),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const PushApp = () => (
     <div>
-        <Calendar />
-        <ModalAddContainer />
+        <Calendar/>
+        <ModalAddContainer/>
     </div>
 );
 

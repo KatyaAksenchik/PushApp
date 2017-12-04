@@ -74,7 +74,7 @@ body {
     border: solid 1px black;
     box-sizing: border-box; }
     .calendar-body .day.last-month {
-      background-color: #f3f0eb; }
+      background-color: #dedbd6; }
     .calendar-body .day .number {
       position: absolute;
       top: 5px;
