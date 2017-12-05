@@ -5,21 +5,21 @@ export const getActivitiesList = ({exercisesTracks}) => {
 };
 
 
-export const getMonthIndexNumber = ({utils}) => {
-    const month = (new Date(utils.day)).getMonth();
+export const getMonthIndexNumber = ({addActivityModal}) => {
+    const month = (new Date(addActivityModal.day)).getMonth();
     return month + 1;
 };
 
-export const getDate = ({utils}) => {
-    return (new Date(utils.day)).getDate();
+export const getDate = ({addActivityModal}) => {
+    return (new Date(addActivityModal.day)).getDate();
 };
 
-export const getActiveStringDate = ({utils}) => {
-    return utils.day;
+export const getActiveStringDate = ({addActivityModal}) => {
+    return addActivityModal.day;
 };
 
-export const getModalVisibility = ({utils}) => {
-    return utils.modal;
+export const getModalVisibility = ({addActivityModal}) => {
+    return addActivityModal.modal;
 };
 
 export const getMonthName = ({calendar}) => {
@@ -60,3 +60,4 @@ export const checkIfMonthThisYear = (month, year) => {
             }
     }
 };
+

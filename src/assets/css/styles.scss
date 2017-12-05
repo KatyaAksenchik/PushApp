@@ -1,6 +1,3 @@
-//@import "utils/utils";
-//@import "core/core";
-//@import "components/components";
 $c-blue: blue;
 $c-light-grey: #dedbd6;
 $c-green: #008000;
@@ -8,7 +5,7 @@ $c-green: #008000;
 $font-family-basic: "Tahoma", "Geneva", sans-serif;
 
 $day-box-width: 100%/7;
-$day-box-height: 180px;
+$day-box-height: calc(100vh/5.8);
 $day-box-add-btn-size: 25px;
 
 $border-calendar-color: black;
@@ -48,7 +45,6 @@ body {
 .calendar {
     padding: 10px;
     max-width: 1140px;
-    height: calc(100vh - 20px);
     margin: 0 auto;
 }
 
@@ -115,7 +111,7 @@ body {
     .day {
         position: relative;
         width: $day-box-width;
-        height: 20%;
+        height: $day-box-height;
         padding: 40px 10px 10px;
         border: solid 1px $border-calendar-color;
         box-sizing: border-box;
@@ -153,6 +149,7 @@ body {
             display: flex;
             justify-content: space-between;
             white-space: nowrap;
+            cursor: pointer;
 
             .name {
                 font-size: $font-size-sm;

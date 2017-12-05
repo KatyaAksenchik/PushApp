@@ -1,4 +1,4 @@
-const utils = (state = {}, action) => {
+const addActivityModal = (state = {}, action) => {
     switch (action.type) {
         case 'OPEN_MODAL':
             return {
@@ -16,4 +16,4 @@ const utils = (state = {}, action) => {
     }
 };
 
-export default utils;
+export default addActivityModal;

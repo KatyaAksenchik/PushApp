@@ -1,5 +1,5 @@
-import {loadCalendarTracks,loadActiveMonth} from './tracks';
-import {getMonthOrder, getCurrentYear, checkIfMonthThisYear} from "../shared/getFromState"
+import {loadCalendarTracks,loadActiveMonth} from "./tracks"
+import {getMonthOrder, getCurrentYear, checkIfMonthThisYear} from "../shared/selectors"
 
 const initPrevNextMonthInfo = (state, operationType) => {
     let order = getMonthOrder(state),
@@ -44,7 +44,6 @@ const calendar = (state = {}, action) => {
             return initPrevNextMonthInfo(state, "NEXT");
         case "SWITCH_TO_PREV_MONTH":
             return initPrevNextMonthInfo(state, "PREV");
-
         default:
             return state;
     }

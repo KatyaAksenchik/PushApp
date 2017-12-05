@@ -1,7 +1,8 @@
-import {connect} from 'react-redux'
+import {connect} from "react-redux"
+
+import ModalAdd from "../components/ModalAdd"
 import {addActivity, closeModalWindow} from "../actions/index";
-import ModalAdd from '../components/ModalAdd'
-import {getMonthIndexNumber, getDate, getModalVisibility, getActiveStringDate} from '../shared/getFromState'
+import {getMonthIndexNumber, getDate, getModalVisibility, getActiveStringDate} from "../shared/selectors"
 import {httpPostRecord, httpFormRecord} from "../shared/http"
 
 

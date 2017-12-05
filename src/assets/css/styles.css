@@ -13,7 +13,6 @@ body {
 .calendar {
   padding: 10px;
   max-width: 1140px;
-  height: calc(100vh - 20px);
   margin: 0 auto; }
 
 .calendar-header {
@@ -69,7 +68,7 @@ body {
   .calendar-body .day {
     position: relative;
     width: 14.28571%;
-    height: 20%;
+    height: calc(100vh/5.8);
     padding: 40px 10px 10px;
     border: solid 1px black;
     box-sizing: border-box; }
@@ -97,7 +96,8 @@ body {
     .calendar-body .activities-list .activity-item {
       display: flex;
       justify-content: space-between;
-      white-space: nowrap; }
+      white-space: nowrap;
+      cursor: pointer; }
       .calendar-body .activities-list .activity-item .name {
         font-size: 0.875rem; }
 

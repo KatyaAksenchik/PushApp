@@ -6,16 +6,28 @@ const CalendarHeaderView = ({monthName, year, prevBtnClick, nextBtnClick, curren
     <div className="calendar-header">
         <div className="month">
             <div>
-                <button className="month-btn" onClick={prevBtnClick}>Назад</button>
+                <button className="month-btn"
+                        onClick={prevBtnClick}
+                >
+                    Назад
+                </button>
             </div>
             <div className="center-block">
-                <button className="month-btn curr-month" onClick={currentBtnClick}>Текущий месяц</button>
+                <button className="month-btn curr-month"
+                        onClick={currentBtnClick}
+                >
+                    Текущий месяц
+                </button>
             </div>
             <div>
                 <h2 className="title">{monthName} {year}</h2>
             </div>
             <div className="margin-left-auto">
-                <button className="month-btn" onClick={nextBtnClick}>Вперед</button>
+                <button className="month-btn"
+                        onClick={nextBtnClick}
+                >
+                    Вперед
+                </button>
             </div>
         </div>
         <div className="week-days">

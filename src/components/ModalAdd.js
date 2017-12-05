@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {FormRowInput, FormRowSelect} from "./FormComponents"
+import {FormRowInput, FormRowSelectFromObject} from "./FormComponents"
 import {ACTIVITIES_TYPES_LIST} from "../shared/const";
 
 
 const INITIAL_STATE_ACTIVITY_ITEM = {
-    activity: "",
+    activity: "0",
     approach: "",
     amount: ""
 };
@@ -33,12 +33,6 @@ class ModalAdd extends React.Component {
         })
     }
 
-    setStateFromSelect(element, description) {
-        if (element.options[element.selectedIndex].dataset.default === "false") {
-            this.setActivityItemState(element.value, description);
-        }
-    }
-
     render() {
         if (!this.props.visibility) {
             return null;
@@ -52,13 +46,13 @@ class ModalAdd extends React.Component {
                     <div className="modal-content">
                         <h3>Добавить занятие за {this.props.activeDay}.{this.props.activeMonth}</h3>
 
-                        <FormRowSelect
+                        <FormRowSelectFromObject
                             data={ACTIVITIES_TYPES_LIST}
                             value={this.state.activityItem.activity}
-                            onSelectChange={(activities) => this.setStateFromSelect(activities, "activity")
+                            onSelectChange={(activities) => this.setActivityItemState(activities, "activity")
                         }>
                             Выберете вид занятия:
-                        </FormRowSelect>
+                        </FormRowSelectFromObject>
 
                         <FormRowInput
                             value={this.state.activityItem.approach}

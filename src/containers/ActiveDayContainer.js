@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 import {openModalWindow} from "../actions/index";
 import ActiveDay from '../components/ActiveDay'
-import {getActivitiesList} from "../shared/getFromState"
+import {getActivitiesList} from "../shared/selectors"
 
 const mapStateToProps = (state, ownProps) => ({
     exercisesTracks: getActivitiesList(ownProps)

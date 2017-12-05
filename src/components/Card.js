@@ -12,7 +12,11 @@ const UnActiveDay = () => (
 const Card = ({dayNumber, dayThisMonth, dayString, exercisesTracks}) => {
     if (dayThisMonth) {
         return (
-            <ActiveDayContainer dayNumber={dayNumber} dayString={dayString} exercisesTracks={exercisesTracks}/>
+            <ActiveDayContainer
+                dayNumber={dayNumber}
+                dayString={dayString}
+                exercisesTracks={exercisesTracks}
+            />
         )
     }
     return (

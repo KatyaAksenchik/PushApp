@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
+
 export const FormRowInput = ({children, value, onInputChange}) => {
     return (
         <div className="form-row">
@@ -18,9 +19,9 @@ export const FormRowInput = ({children, value, onInputChange}) => {
 
 FormRowInput.propTypes = {
     children: PropTypes.string,
+    value: PropTypes.string,
     onInputChange: PropTypes.func
 };
-
 
 export const FormRowSelect = ({children, value, data, onSelectChange}) => {
     return (
@@ -28,11 +29,13 @@ export const FormRowSelect = ({children, value, data, onSelectChange}) => {
             <label>
                 {children}
             </label>
-            <select onChange={(e) => onSelectChange(e.target)}>
+            <select onChange={(e) => {
+                onSelectChange(e.target.value)
+            }}>
                 {
-                    data.map((item) =>
-                        <option key={item.id} value={item.id}>
-                            {item.name}
+                    data.map((item, i) =>
+                        <option key={i} value={item.id}>
+                            {item[i]}
                         </option>
                     )
                 }
@@ -40,13 +43,43 @@ export const FormRowSelect = ({children, value, data, onSelectChange}) => {
         </div>
     )
 };
-
 FormRowSelect.propsTypes = {
     children: PropTypes.element,
+    value: PropTypes.string,
     activities: PropTypes.array,
     onSelectChange: PropTypes.func
 };
 
 
-///Почему в FormRowSelect не ругается на children: PropTypes.element, а в FormRowInput
-// Warning: Failed prop type: Invalid prop `children` of type `string` supplied to `FormRowInput`, expected a single ReactElement.
+export const FormRowSelectFromObject = ({children, value, data, onSelectChange}) => {
+    let options = [];
+
+    for (let prop in data) {
+        let option = (
+            <option key={prop} value={prop}>
+                {data[prop]}
+            </option>
+        );
+        options.push(option);
+    }
+
+    return (
+        <div className="form-row">
+            <label>
+                {children}
+            </label>
+            <select value={value} onChange={(e) => {
+                onSelectChange(e.target.value)
+            }}>
+                {options}
+            </select>
+        </div>
+    )
+};
+
+FormRowSelectFromObject.propsTypes = {
+    children: PropTypes.element,
+    value: PropTypes.string,
+    activities: PropTypes.array,
+    onSelectChange: PropTypes.func
+};

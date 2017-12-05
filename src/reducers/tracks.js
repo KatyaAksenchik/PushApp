@@ -52,18 +52,45 @@ const initDaysOfCurrentMonth = ({currentYear, monthOrder, daysInMonth}) => {
             }
         }
     }
+
     return filledDays;
 };
 
-const initVisibleDays = (beginningOfMonth) => {
-    const length = beginningOfMonth.length;
-    if (beginningOfMonth.length < 35) {
-        beginningOfMonth.length = 35;
-        beginningOfMonth.fill({"dayThisMonth": false}, length, 35);
+const complementVisibleDays = (days, number) => {
+    const length = days.length;
+
+    if(days.length < number){
+        days.length = number;
+        days.fill({"dayThisMonth": false}, length, number)
     }
 
-    return beginningOfMonth;
+    return days;
 };
+
+const initVisibleDays = (beginningOfMonth, numberOfWeekDay, daysInMonth) => {
+    if((numberOfWeekDay === 6 || numberOfWeekDay===5) && daysInMonth>=30){
+        return complementVisibleDays(beginningOfMonth, 42);
+    }
+    return complementVisibleDays(beginningOfMonth, 35);
+
+};
+
+// const getTodayDay = (days) => {
+//     days.forEach((item, i) => {
+//         console.log(item[i]);
+//
+//         const curr = new Date(item[i].dayString);
+//         const today = new Date();
+//
+//          if(curr.getDate()=== today.getDate() && curr.getFullYear() === today.getFullYear()){
+//              item[i].today = true;
+//          } else {
+//              item[i].today = false;
+//          }
+//     });
+//
+//     return days;
+// };
 
 export const loadCalendarTracks = ({monthOrder, currentYear}) => {
     const firstDayOfMonth = new Date(currentYear, monthOrder, 1);
@@ -83,13 +110,15 @@ export const loadCalendarTracks = ({monthOrder, currentYear}) => {
     let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
     let daysThisMonth = initDaysOfCurrentMonth(monthDays);
 
-    return initVisibleDays(dayPrevMonth.concat(daysThisMonth));
+
+
+    return initVisibleDays(dayPrevMonth.concat(daysThisMonth),numberOfWeek, daysInMonth);
 };
 
 
-let today = new Date();
 
 export const loadActiveMonth = () => {
+    let today = new Date();
     return {
         monthOrder: today.getMonth(),
         currentYear: today.getFullYear(),

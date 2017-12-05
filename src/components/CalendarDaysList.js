@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Card from "./Card";
 
+
 const CalendarDaysList = ({calendar}) => (
     <div className="calendar-body">
         {
