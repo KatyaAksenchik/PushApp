@@ -9,13 +9,14 @@ const UnActiveDay = () => (
     </div>
 );
 
-const Card = ({dayNumber, dayThisMonth, dayString, exercisesTracks}) => {
+const Card = ({dayThisMonth, dayNumber, dayString, exercisesTracks, today}) => {
     if (dayThisMonth) {
         return (
             <ActiveDayContainer
-                dayNumber={dayNumber}
-                dayString={dayString}
-                exercisesTracks={exercisesTracks}
+                dayNumber = {dayNumber}
+                dayString = {dayString}
+                exercisesTracks = {exercisesTracks}
+                today = {today}
             />
         )
     }

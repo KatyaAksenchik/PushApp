@@ -17,15 +17,21 @@ const initOccupiedDays = (year, month) => {
     let occupiedDays = [];
 
     records.forEach((item) => {
-        const index = new Date(item.date).getDate()-1;
+        const index = new Date(item.date).getDate() - 1;
 
         if (!occupiedDays[index]) {
             occupiedDays[index] = {
                 "dayThisMonth": true,
-                "exercisesTracks": [item.exercise]
+                "exercisesTracks": [{
+                    id: item.id,
+                    exercises: item.exercise
+                }]
             };
         } else {
-            occupiedDays[index].exercisesTracks.push(item.exercise)
+            occupiedDays[index].exercisesTracks.push({
+                id: item.id,
+                exercises: item.exercise
+            })
         }
     });
     return occupiedDays;
@@ -59,7 +65,7 @@ const initDaysOfCurrentMonth = ({currentYear, monthOrder, daysInMonth}) => {
 const complementVisibleDays = (days, number) => {
     const length = days.length;
 
-    if(days.length < number){
+    if (days.length < number) {
         days.length = number;
         days.fill({"dayThisMonth": false}, length, number)
     }
@@ -68,29 +74,25 @@ const complementVisibleDays = (days, number) => {
 };
 
 const initVisibleDays = (beginningOfMonth, numberOfWeekDay, daysInMonth) => {
-    if((numberOfWeekDay === 6 || numberOfWeekDay===5) && daysInMonth>=30){
+    if ((numberOfWeekDay === 6 && daysInMonth > 29) || (numberOfWeekDay === 5 && daysInMonth > 30)) {
         return complementVisibleDays(beginningOfMonth, 42);
     }
     return complementVisibleDays(beginningOfMonth, 35);
 
 };
 
-// const getTodayDay = (days) => {
-//     days.forEach((item, i) => {
-//         console.log(item[i]);
-//
-//         const curr = new Date(item[i].dayString);
-//         const today = new Date();
-//
-//          if(curr.getDate()=== today.getDate() && curr.getFullYear() === today.getFullYear()){
-//              item[i].today = true;
-//          } else {
-//              item[i].today = false;
-//          }
-//     });
-//
-//     return days;
-// };
+const getTodayDay = (days) => {
+    days.forEach((item, i) => {
+        const curr = new Date(item.dayString);
+        const today = new Date();
+
+        (curr.getDate() === today.getDate() && curr.getMonth() === today.getMonth()
+            && curr.getFullYear() === today.getFullYear()) ? item.today = true : item.today = false;
+
+    });
+
+    return days;
+};
 
 export const loadCalendarTracks = ({monthOrder, currentYear}) => {
     const firstDayOfMonth = new Date(currentYear, monthOrder, 1);
@@ -109,12 +111,10 @@ export const loadCalendarTracks = ({monthOrder, currentYear}) => {
 
     let dayPrevMonth = initDaysOfPrevMonth(numberOfWeek);
     let daysThisMonth = initDaysOfCurrentMonth(monthDays);
+    let daysWithToday = getTodayDay(dayPrevMonth.concat(daysThisMonth));
 
-
-
-    return initVisibleDays(dayPrevMonth.concat(daysThisMonth),numberOfWeek, daysInMonth);
+    return initVisibleDays(daysWithToday, numberOfWeek, daysInMonth);
 };
-
 
 
 export const loadActiveMonth = () => {

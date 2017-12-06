@@ -1,24 +1,24 @@
 import {connect} from "react-redux"
 
 import ModalWrapper from "../components/ModalWrapper"
-import {closeAddModal} from "../actions/index";
+import {closeEditModal} from "../actions/index";
 
 
 
 const mapStateToProps = (state) => ({
-    visibility: state.modalVisibility.addModal,
+    visibility: state.modalVisibility.editModal,
     dayString: state.activityMaintenance.dayString
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onCancelBtnClick: () => {
-        dispatch(closeAddModal());
+        dispatch(closeEditModal());
     }
 });
 
-const ModalWrapperContainer = connect(
+const ModalEditContainer = connect(
     mapStateToProps,
     mapDispatchToProps
 )(ModalWrapper);
 
-export default ModalWrapperContainer;
+export default ModalEditContainer;

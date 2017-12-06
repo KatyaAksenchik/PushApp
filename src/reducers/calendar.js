@@ -1,19 +1,20 @@
 import {loadCalendarTracks,loadActiveMonth} from "./tracks"
 import {getMonthOrder, getCurrentYear, checkIfMonthThisYear} from "../shared/selectors"
 
+
+const INITIAL_STATE = {
+    monthInfo: {
+        monthOrder: null,
+        currentYear: null
+    },
+    calendarDays : []
+};
+
 const initPrevNextMonthInfo = (state, operationType) => {
     let order = getMonthOrder(state),
         year = getCurrentYear(state);
 
-    // order = (operationType === "NEXT") ? order++ : order--;
-    // Почему так не сработало??
-
-    if (operationType === "NEXT") {
-        order++
-    }
-    else {
-        order--
-    }
+    (operationType === "NEXT")? order++ : order--;
 
     const data = checkIfMonthThisYear(order, year);
 
@@ -22,7 +23,6 @@ const initPrevNextMonthInfo = (state, operationType) => {
         calendarDays: loadCalendarTracks(data)
     }
 };
-
 
 const calendar = (state = {}, action) => {
     switch (action.type) {
@@ -34,11 +34,10 @@ const calendar = (state = {}, action) => {
                 calendarDays: loadCalendarTracks(activeMonthInfo)
             };
         case "UPDATE_CALENDAR_TO_CURRENT":
-            const currentMonthInfo = loadActiveMonth();
-
             return {
-                monthInfo:currentMonthInfo,
-                calendarDays: loadCalendarTracks(currentMonthInfo)
+                ...state,
+                monthInfo:loadActiveMonth(),
+                calendarDays: loadCalendarTracks(loadActiveMonth())
             };
         case "SWITCH_TO_NEXT_MONTH":
             return initPrevNextMonthInfo(state, "NEXT");
@@ -50,14 +49,3 @@ const calendar = (state = {}, action) => {
 };
 
 export default calendar;
-
-
-/*
- state = {
- monthInfo: {
- monthOrder: 10,
- currentYear: 2017
- }
- calendarDays : []
- }
- */

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux'
-import {openModalWindow} from "../actions/index";
+import {openAddModal} from "../actions/index";
 import ActiveDay from '../components/ActiveDay'
 import {getActivitiesList} from "../shared/selectors"
 
@@ -9,12 +9,12 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: () => {
-        dispatch(openModalWindow(ownProps.dayString))
+        dispatch(openAddModal(ownProps.dayString))
     }
 });
 
 const ActiveDayContainer = connect(
-    mapStateToProps,
+    undefined,
     mapDispatchToProps
 )(ActiveDay);
 

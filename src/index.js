@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {createStore} from 'redux';
+import {createStore} from 'redux'
 
-import ModalAddContainer from "./containers/ModalAddContainer";
 import Calendar from "./components/Calendar"
+import Modals from "./components/Modals"
 import {loadCalendarTracks, loadActiveMonth} from "./reducers/tracks"
 import pushApp from "./reducers/index"
 import {today} from "./shared/const"
@@ -36,7 +36,7 @@ const store = createStore(
 const PushApp = () => (
     <div>
         <Calendar/>
-        <ModalAddContainer/>
+        <Modals/>
     </div>
 );
 

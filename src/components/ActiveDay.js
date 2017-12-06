@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import ActivitiesList from './ActivitiesList'
 
 
-const ActiveDay = ({dayNumber, onClick, exercisesTracks}) => (
-    <div className="day">
+const ActiveDay = ({dayNumber, today, onClick, exercisesTracks}) => (
+    <div className={`day ${today ? 'today' : ''}`}>
         <button className="add" onClick={onClick}>+</button>
         <p className="number">
             {dayNumber}

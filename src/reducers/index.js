@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux'
 
 import calendar from './calendar'
-// import utils from  './utils'
-import addActivityModal from './addActivityModal'
+import modalVisibility from './modalVisibility'
+import activityMaintenance from './activityMaintanance'
 
 const pushApp = combineReducers({
     calendar,
-    // utils
-    addActivityModal
+    modalVisibility,
+    activityMaintenance
 });
 
 

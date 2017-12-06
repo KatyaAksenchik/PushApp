@@ -5,22 +5,22 @@ export const getActivitiesList = ({exercisesTracks}) => {
 };
 
 
-export const getMonthIndexNumber = ({addActivityModal}) => {
-    const month = (new Date(addActivityModal.day)).getMonth();
-    return month + 1;
+// export const getMonthIndexNumber = ({addActivityModal}) => {
+//     const month = (new Date(addActivityModal.day)).getMonth();
+//     return month + 1;
+// };
+//
+// export const getDate = ({addActivityModal}) => {
+//     return (new Date(addActivityModal.day)).getDate();
+// };
+
+export const getActiveStringDate = ({activityMaintenance}) => {
+    return activityMaintenance.dayString;
 };
 
-export const getDate = ({addActivityModal}) => {
-    return (new Date(addActivityModal.day)).getDate();
-};
-
-export const getActiveStringDate = ({addActivityModal}) => {
-    return addActivityModal.day;
-};
-
-export const getModalVisibility = ({addActivityModal}) => {
-    return addActivityModal.modal;
-};
+// export const getModalVisibility = ({addActivityModal}) => {
+//     return addActivityModal.modal;
+// };
 
 export const getMonthName = ({calendar}) => {
     const activeMonth = calendar.monthInfo.monthOrder;
@@ -40,6 +40,10 @@ export const getCurrentYear = ({monthInfo}) => {
     return monthInfo.currentYear;
 };
 
+
+export const getActivityItem = ({activityMaintenance}) => {
+    return activityMaintenance.activityItem;
+};
 
 export const checkIfMonthThisYear = (month, year) => {
     switch (month) {
