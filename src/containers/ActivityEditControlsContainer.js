@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onCancelBtnClick: () => {
         dispatch(closeEditModal());
     },
-    onAddBtnClick: (activityItem, dayString) => {
+    onEditBtnClick: (activityItem, dayString) => {
 
         const item = httpFormRecord(dayString, activityItem);
         httpPostRecord(item);

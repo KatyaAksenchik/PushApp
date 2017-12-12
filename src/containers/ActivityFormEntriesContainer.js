@@ -1,6 +1,6 @@
 import {connect} from "react-redux"
 
-import {changeActivity, changeApproach, changeAmount} from "../actions";
+import {chaneActivityState} from "../actions";
 import {getActivityItem} from "../shared/selectors"
 import {ActivityFormEntries} from "../components/ActivityFormComponents"
 
@@ -9,14 +9,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onChangeActivity: (activity) => {
-        dispatch(changeActivity(activity))
-    },
-    onChangeApproach: (approach) => {
-        dispatch(changeApproach(approach))
-    },
-    onChangeAmount: (amount) => {
-        dispatch(changeAmount(amount))
+    chaneActivityState: (value,key) => {
+        dispatch(chaneActivityState(value,key))
     }
 });
 

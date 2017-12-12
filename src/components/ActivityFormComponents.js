@@ -4,27 +4,27 @@ import PropTypes from 'prop-types'
 import {FormRowInput, FormRowSelectFromObject} from './FormComponents'
 import {ACTIVITIES_TYPES_LIST} from '../shared/const';
 
-export const ActivityFormEntries = ({activityItem, onChangeActivity, onChangeApproach, onChangeAmount}) => {
+export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
     return (
         <div className="formEntries">
             <FormRowSelectFromObject
                 data={ACTIVITIES_TYPES_LIST}
                 value={activityItem.activity}
-                onSelectChange={(activity) => onChangeActivity(activity)}
+                onSelectChange={(activity) => chaneActivityState(activity, "activity")}
             >
                 Выберете вид занятия:
             </FormRowSelectFromObject>
 
             <FormRowInput
                 value={activityItem.approach}
-                onInputChange={(approach) => onChangeApproach(approach)}
+                onInputChange={(approach) => chaneActivityState(approach, "approach")}
             >
                 Количество подходов:
             </FormRowInput>
 
             <FormRowInput
                 value={activityItem.amount}
-                onInputChange={(amount) => onChangeAmount(amount)}
+                onInputChange={(amount) => chaneActivityState(amount, "amount")}
             >
                 Количество раз в подходе:
             </FormRowInput>
@@ -33,9 +33,7 @@ export const ActivityFormEntries = ({activityItem, onChangeActivity, onChangeApp
 };
 ActivityFormEntries.propTypes = {
     activityItem: PropTypes.object,
-    onChangeActivity: PropTypes.func,
-    onChangeApproach: PropTypes.func,
-    onChangeAmount: PropTypes.func
+    chaneActivityState: PropTypes.func
 };
 
 export const ActivityAddControls = ({activityItem, dayString, onCancelBtnClick, onAddBtnClick}) => {
@@ -62,11 +60,11 @@ ActivityAddControls.propTypes = {
 };
 
 
-export const ActivityEditControls = ({activityItem, dayString, onCancelBtnClick, onAddBtnClick}) => {
+export const ActivityEditControls = ({activityItem, dayString, onCancelBtnClick, onEditBtnClick}) => {
     return (
         <div className="btn-wrapper">
             <button className="btn-modal"
-                    onClick={() => onAddBtnClick(activityItem, dayString)}
+                    onClick={() => onEditBtnClick()}
             >
                 Сохранить
             </button>

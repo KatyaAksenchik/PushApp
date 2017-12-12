@@ -32,17 +32,8 @@ export const updateCalendarToCurrentMonth = () => ({
     type: "UPDATE_CALENDAR_TO_CURRENT"
 });
 
-export const changeActivity = (activity) => ({
-    type: "CHANGE_ACTIVITY",
-    activity
-});
-
-export const changeAmount = (amount) => ({
-    type: "CHANGE_AMOUNT",
-    amount
-});
-
-export const changeApproach = (approach) => ({
-    type: "CHANGE_APPROACH",
-    approach
+export const chaneActivityState = (value, key) => ({
+    type: "CHANGE_ACTIVITY_STATE",
+    value,
+    key
 });

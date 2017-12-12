@@ -4,6 +4,7 @@ const INITIAL_STATE = {
         approach: "",
         amount: ""
     },
+    id: null,
     dayString: {}
 };
 
@@ -27,20 +28,10 @@ const activityMaintenance = (state = INITIAL_STATE, action) => {
                 activityItem: action.activityItem,
                 dayString: action.dayString
             };
-        case 'CHANGE_ACTIVITY':
+        case "CHANGE_ACTIVITY_STATE":
             return {
                 ...state,
-                activityItem: setStateParameter(state.activityItem, action.activity, "activity")
-            };
-        case 'CHANGE_APPROACH':
-            return {
-                ...state,
-                activityItem: setStateParameter(state.activityItem, action.approach, "approach")
-            };
-        case 'CHANGE_AMOUNT':
-            return {
-                ...state,
-                activityItem: setStateParameter(state.activityItem, action.amount, "amount")
+                activityItem: setStateParameter(state.activityItem, action.value, action.key)
             };
         default:
             return state;

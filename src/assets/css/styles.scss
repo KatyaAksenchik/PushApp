@@ -122,10 +122,12 @@ body {
             background-color: fade_in($c-light-grey, 0.5);
         }
 
-        &.today {
-            //background-color: fade_in($c-green);
-            //background-color: $c-light-green;
-            box-shadow: inset 0 0 0 4px $c-light-green;
+        &.today .number {
+            width: 75%;
+            height: 20px;
+            padding-left: 10px;
+            background-color: $c-light-green;
+            border-radius: 15px;
         }
 
         .number {

@@ -75,8 +75,12 @@ body {
     box-sizing: border-box; }
     .calendar-body .day.last-month {
       background-color: #dedbd6; }
-    .calendar-body .day.today {
-      box-shadow: inset 0 0 0 4px rgba(0, 128, 0, 0.32); }
+    .calendar-body .day.today .number {
+      width: 75%;
+      height: 20px;
+      padding-left: 10px;
+      background-color: rgba(0, 128, 0, 0.32);
+      border-radius: 15px; }
     .calendar-body .day .number {
       position: absolute;
       top: 5px;
