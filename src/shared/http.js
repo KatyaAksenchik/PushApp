@@ -47,14 +47,13 @@ export const httpFormRecord = (date, exercise) => {
 export const httpUpdateItem = (record, id) => {
     let records = getDatabase();
 
-    return records.map((item) => {
+    records.forEach((item, index) => {
         if (item.id === id) {
-            return {
-                ...item,
-                exercise: record
-            }
+            item.exercise = record;
         }
-    })
+    });
+
+    return records;
 };
 
 export const httpDeleteItem = (id) => {

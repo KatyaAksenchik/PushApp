@@ -77,10 +77,6 @@ export const ActivityEditControls = ({activityItem, dayString, id, onCancelBtnCl
             >
                 Отмена
             </button>
-            <div>
-                {console.log(dayString)}
-            </div>
-
         </div>
     )
 };
