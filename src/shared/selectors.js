@@ -18,9 +18,9 @@ export const getActiveStringDate = ({activityMaintenance}) => {
     return activityMaintenance.dayString;
 };
 
-// export const getModalVisibility = ({addActivityModal}) => {
-//     return addActivityModal.modal;
-// };
+export const getActivityItemId = ({activityMaintenance}) => {
+    return activityMaintenance.id;
+};
 
 export const getMonthName = ({calendar}) => {
     const activeMonth = calendar.monthInfo.monthOrder;

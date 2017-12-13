@@ -29,6 +29,7 @@ export const httpGetRecords = (month, year) => {
     return allRecords[`${month}/${year}`];
 };
 
+
 export const httpPostRecord = (item) => {
     let database = getDatabase();
     database.push(item);
@@ -41,3 +42,23 @@ export const httpFormRecord = (date, exercise) => {
 
     return {id, date, key, exercise}
 };
+
+
+export const httpUpdateItem = (record, id) => {
+    let records = getDatabase();
+
+    return records.map((item) => {
+        if (item.id === id) {
+            return {
+                ...item,
+                exercise: record
+            }
+        }
+    })
+};
+
+export const httpDeleteItem = (id) => {
+    let records = getDatabase();
+    return records.filter((item) => item.id !== id);
+};
+

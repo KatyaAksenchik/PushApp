@@ -15,9 +15,11 @@ export const closeAddModal = () => ({
     type: "CLOSE_ADD_MODAL"
 });
 
-export const openEditModal = (id, activityItem) => ({
+export const openEditModal = (id, activityItem, dayString) => ({
     type: "OPEN_EDIT_MODAL",
-    activityItem
+    activityItem,
+    id,
+    dayString
 });
 
 export const closeEditModal = () => ({
@@ -26,6 +28,10 @@ export const closeEditModal = () => ({
 
 export const addActivity = () => ({
     type: "ADD_ACTIVITY"
+});
+
+export const updateCalendar = () => ({
+    type: "UPDATE_CALENDAR"
 });
 
 export const updateCalendarToCurrentMonth = () => ({

@@ -60,15 +60,16 @@ ActivityAddControls.propTypes = {
 };
 
 
-export const ActivityEditControls = ({activityItem, dayString, onCancelBtnClick, onEditBtnClick}) => {
+export const ActivityEditControls = ({activityItem, dayString, id, onCancelBtnClick, onEditBtnClick, onDeleteBtnClick}) => {
     return (
+
         <div className="btn-wrapper">
             <button className="btn-modal"
-                    onClick={() => onEditBtnClick()}
+                    onClick={() => onEditBtnClick(activityItem,dayString,id)}
             >
                 Сохранить
             </button>
-            <button className="btn-modal">
+            <button className="btn-modal"  onClick={() => onDeleteBtnClick(id)}>
                 Удалить
             </button>
             <button className="btn-modal"
@@ -76,6 +77,10 @@ export const ActivityEditControls = ({activityItem, dayString, onCancelBtnClick,
             >
                 Отмена
             </button>
+            <div>
+                {console.log(dayString)}
+            </div>
+
         </div>
     )
 };

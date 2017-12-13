@@ -1,24 +1,30 @@
 import {connect} from "react-redux"
-import {addActivity, closeEditModal} from "../actions";
-import {getActivityItem, getActiveStringDate} from "../shared/selectors"
+import {addActivity, closeEditModal, updateCalendar} from "../actions";
+import {getActivityItem, getActiveStringDate, getActivityItemId} from "../shared/selectors"
 import {ActivityEditControls} from "../components/ActivityFormComponents"
-import {httpFormRecord, httpPostRecord} from "../shared/http";
+import {httpFormRecord, httpPostRecord, httpUpdateItem, httpDeleteItem, setDatabase} from "../shared/http";
 
 const mapStateToProps = (state) => ({
     activityItem: getActivityItem(state),
-    dayString: getActiveStringDate(state)
+    dayString: getActiveStringDate(state),
+    id: getActivityItemId(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onCancelBtnClick: () => {
         dispatch(closeEditModal());
     },
-    onEditBtnClick: (activityItem, dayString) => {
+    onDeleteBtnClick: (id) => {
+        let result = httpDeleteItem(id);
+        setDatabase(result);
 
-        const item = httpFormRecord(dayString, activityItem);
-        httpPostRecord(item);
+        dispatch(updateCalendar());
+    },
+    onEditBtnClick: (activityItem, dayString, id) => {
+        let response = httpUpdateItem(activityItem, id);
+        setDatabase(response);
 
-        dispatch(addActivity());
+        dispatch(updateCalendar());
     }
 });
 

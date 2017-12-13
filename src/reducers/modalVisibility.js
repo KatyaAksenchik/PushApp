@@ -22,6 +22,7 @@ const modalVisibility = (state = {}, action) => {
                 editModal: true
             };
         case 'CLOSE_EDIT_MODAL':
+        case 'UPDATE_CALENDAR':
             return{
                 ...state,
                 editModal: false

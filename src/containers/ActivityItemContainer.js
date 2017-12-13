@@ -6,8 +6,8 @@ import {ACTIVITIES_TYPES_LIST} from "../shared/const";
 
 
 const mapDispatchToProps = (dispatch) => ({
-    onItemClick: (id, activityItem) => {
-        dispatch(openEditModal(id, activityItem));
+    onItemClick: (id, activityItem, dayString) => {
+        dispatch(openEditModal(id, activityItem, dayString));
     }
 });
 

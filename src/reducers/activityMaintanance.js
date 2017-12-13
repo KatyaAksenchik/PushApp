@@ -23,10 +23,12 @@ const activityMaintenance = (state = INITIAL_STATE, action) => {
                 dayString: action.dayString
             };
         case 'OPEN_EDIT_MODAL':
+            console.log("DAY_STRING", action.dayString);
             return {
                 ...state,
                 activityItem: action.activityItem,
-                dayString: action.dayString
+                dayString: action.dayString,
+                id: action.id
             };
         case "CHANGE_ACTIVITY_STATE":
             return {
