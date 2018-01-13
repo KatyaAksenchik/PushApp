@@ -24,7 +24,7 @@ const initPrevNextMonthInfo = (state, operationType) => {
     }
 };
 
-const calendar = (state = {}, action) => {
+const calendar = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case "ADD_ACTIVITY":
         case "UPDATE_CALENDAR":

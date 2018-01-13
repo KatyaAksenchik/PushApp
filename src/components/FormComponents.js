@@ -2,20 +2,93 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 
-export const FormRowInput = ({children, value, onInputChange}) => {
-    return (
-        <div className="form-row">
-            <label>
-                {children}
-            </label>
-            <input
-                type="text"
-                value={value}
-                onChange={(e) => onInputChange(e.target.value)}
-            />
-        </div>
-    )
-};
+// export const FormRowInput = ({children, value, onInputChange}) => {
+//     return (
+//         <div className="form-row">
+//             <label>
+//                 {children}
+//             </label>
+//             <input
+//                 type="text"
+//                 value={value}
+//                 onChange={(e) => onInputChange(e.target.value)}
+//                 onBlur={() => console.log("BLUR")}
+//             />
+//         </div>
+//     )
+// };
+
+const ErrorMessage = ({children}) => (
+    <div className="error-message">
+        {children}
+    </div>
+);
+
+
+// const INITIAL_STATE = {
+//     error: "",
+//     valid: true
+// };
+
+export class FormRowInput extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            error: "",
+            valid: true
+        }
+    }
+
+    _validateInput(e) {
+        let validation = this.props.validate(e.target.value);
+
+        if (!validation.message || e.target.value === "") {
+            this.props.onInputChange(e.target.value);
+            this.setState = ({
+                error: "",
+                valid: true
+            });
+        } else {
+            console.log(validation.message);
+            this.setState = ({
+                error: validation.message,
+                valid: false
+            });
+        }
+    }
+
+    _onBlur(e) {
+        let validation = this.props.validate("katya");
+        console.log(validation);
+    }
+
+    render() {
+        let showError =  this.state.valid;
+
+        return (
+            <div className="form-row">
+                <label>
+                    {this.props.children}
+                </label>
+                <input
+                    type="text"
+                    value={this.props.value}
+                    onChange={(e) => this._validateInput(e)}
+                />
+                {
+                    !showError &&
+                    <ErrorMessage>
+                        {this.state.error}
+                    </ErrorMessage>
+                }
+            </div>
+        )
+    }
+}
+
+
+export const Example = 0;
 
 FormRowInput.propTypes = {
     children: PropTypes.string,

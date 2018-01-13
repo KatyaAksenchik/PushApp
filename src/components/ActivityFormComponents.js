@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import {FormRowInput, FormRowSelectFromObject} from './FormComponents'
 import {ACTIVITIES_TYPES_LIST} from '../shared/const';
+import {validateNumberField} from '../shared/validation'
 
 export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
     return (
@@ -11,11 +12,13 @@ export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
                 data={ACTIVITIES_TYPES_LIST}
                 value={activityItem.activity}
                 onSelectChange={(activity) => chaneActivityState(activity, "activity")}
+                onBlur={() => console.log("BLUR")}
             >
                 Выберете вид занятия:
             </FormRowSelectFromObject>
 
             <FormRowInput
+                validate={validateNumberField}
                 value={activityItem.approach}
                 onInputChange={(approach) => chaneActivityState(approach, "approach")}
             >
@@ -23,6 +26,7 @@ export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
             </FormRowInput>
 
             <FormRowInput
+                validate={validateNumberField}
                 value={activityItem.amount}
                 onInputChange={(amount) => chaneActivityState(amount, "amount")}
             >
@@ -65,11 +69,11 @@ export const ActivityEditControls = ({activityItem, dayString, id, onCancelBtnCl
 
         <div className="btn-wrapper">
             <button className="btn-modal"
-                    onClick={() => onEditBtnClick(activityItem,dayString,id)}
+                    onClick={() => onEditBtnClick(activityItem, dayString, id)}
             >
                 Сохранить
             </button>
-            <button className="btn-modal"  onClick={() => onDeleteBtnClick(id)}>
+            <button className="btn-modal" onClick={() => onDeleteBtnClick(id)}>
                 Удалить
             </button>
             <button className="btn-modal"

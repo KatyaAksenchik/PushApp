@@ -14,6 +14,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(closeAddModal());
     },
     onAddBtnClick: (activityItem, dayString) => {
+        console.log(activityItem);
 
         const item = httpFormRecord(dayString, activityItem);
         httpPostRecord(item);

@@ -1,8 +1,8 @@
 import {connect} from "react-redux"
-import {addActivity, closeEditModal, updateCalendar} from "../actions";
+import {closeEditModal, updateCalendar} from "../actions";
 import {getActivityItem, getActiveStringDate, getActivityItemId} from "../shared/selectors"
 import {ActivityEditControls} from "../components/ActivityFormComponents"
-import {httpFormRecord, httpPostRecord, httpUpdateItem, httpDeleteItem, setDatabase} from "../shared/http";
+import {httpUpdateItem, httpDeleteItem, setDatabase} from "../shared/http";
 
 const mapStateToProps = (state) => ({
     activityItem: getActivityItem(state),

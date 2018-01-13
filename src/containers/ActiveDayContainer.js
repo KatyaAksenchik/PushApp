@@ -1,11 +1,8 @@
 import {connect} from 'react-redux'
-import {openAddModal} from "../actions/index";
-import ActiveDay from '../components/ActiveDay'
-import {getActivitiesList} from "../shared/selectors"
 
-const mapStateToProps = (state, ownProps) => ({
-    exercisesTracks: getActivitiesList(ownProps)
-});
+import ActiveDay from '../components/ActiveDay'
+import {openAddModal} from "../actions/index";
+
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onClick: () => {

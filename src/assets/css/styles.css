@@ -6,6 +6,10 @@
 .margin-left-auto {
   margin-left: auto; }
 
+.error-message {
+  font-size: 0.8215rem;
+  color: rgba(255, 0, 0, 0.8); }
+
 body {
   font-family: "Tahoma", "Geneva", sans-serif;
   margin: 0; }
@@ -74,7 +78,7 @@ body {
     border: solid 1px black;
     box-sizing: border-box; }
     .calendar-body .day.last-month {
-      background-color: #dedbd6; }
+      background-color: rgba(222, 219, 214, 0.5); }
     .calendar-body .day.today .number {
       width: 75%;
       height: 20px;

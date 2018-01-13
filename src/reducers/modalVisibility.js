@@ -3,7 +3,7 @@ const INITIAL_STATE = {
     editModal: false
 };
 
-const modalVisibility = (state = {}, action) => {
+const modalVisibility = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'OPEN_ADD_MODAL':
             return {
