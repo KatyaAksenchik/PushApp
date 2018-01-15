@@ -44,17 +44,23 @@ export class FormRowInput extends React.Component {
         let validation = this.props.validate(e.target.value);
 
         if (!validation.message || e.target.value === "") {
-            this.props.onInputChange(e.target.value);
-            this.setState = ({
+            // this.props.onInputChange(e.target.value);
+            this.state = {
                 error: "",
                 valid: true
-            });
+            };
+
+            return e.target.value;
         } else {
             console.log(validation.message);
-            this.setState = ({
+            // this.props.onInputChange(e.target.value);
+            this.state = {
                 error: validation.message,
                 valid: false
-            });
+            };
+
+            console.log(this.state);
+            return e.target.value;
         }
     }
 
@@ -64,7 +70,11 @@ export class FormRowInput extends React.Component {
     }
 
     render() {
-        let showError =  this.state.valid;
+        console.log(this.state);
+
+        let showError = this.state.valid;
+        console.log("showError", showError);
+
 
         return (
             <div className="form-row">
@@ -74,7 +84,7 @@ export class FormRowInput extends React.Component {
                 <input
                     type="text"
                     value={this.props.value}
-                    onChange={(e) => this._validateInput(e)}
+                    onChange={(e) => this.props.onInputChange(this._validateInput(e))}
                 />
                 {
                     !showError &&
