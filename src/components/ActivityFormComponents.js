@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {FormRowInput, FormRowSelectFromObject} from './FormComponents'
 import {ACTIVITIES_TYPES_LIST} from '../shared/const';
 import {validateNumberField} from '../shared/validation'
+import {FormValidatedInput} from './ValidationsWrappers'
 
 export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
     return (
@@ -17,21 +18,39 @@ export const ActivityFormEntries = ({activityItem, chaneActivityState}) => {
                 Выберете вид занятия:
             </FormRowSelectFromObject>
 
-            <FormRowInput
+            <FormValidatedInput
+                labelText={"Количество подходов:"}
                 validate={validateNumberField}
                 value={activityItem.approach}
-                onInputChange={(approach) => chaneActivityState(approach, "approach")}
-            >
-                Количество подходов:
-            </FormRowInput>
+                onValidateInput = {(approach) => chaneActivityState(approach, "approach")}
+            />
 
-            <FormRowInput
+            <FormValidatedInput
+                labelText={"Количество раз в подходе:"}
                 validate={validateNumberField}
                 value={activityItem.amount}
-                onInputChange={(amount) => chaneActivityState(amount, "amount")}
-            >
-                Количество раз в подходе:
-            </FormRowInput>
+                onValidateInput = {(amount) => chaneActivityState(amount, "amount")}
+            />
+
+
+            {/*<FormRowInput*/}
+                {/*validate={validateNumberField}*/}
+                {/*value={activityItem.approach}*/}
+                {/*onInputChange={(approach) => chaneActivityState(approach, "approach")}*/}
+            {/*>*/}
+                {/*Количество подходов:*/}
+            {/*</FormRowInput>*/}
+
+
+            {/*<FormRowInput*/}
+                {/*validate={validateNumberField}*/}
+                {/*value={activityItem.amount}*/}
+                {/*onInputChange={(amount) => chaneActivityState(amount, "amount")}*/}
+            {/*>*/}
+                {/*Количество раз в подходе:*/}
+            {/*</FormRowInput>*/}
+
+
         </div>
     )
 };

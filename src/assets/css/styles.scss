@@ -208,8 +208,13 @@ body {
     }
 
     .modal-content {
-        .form-row {
+        .form-row-wrapper{
             margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
         }
 
         h3 {
@@ -233,6 +238,7 @@ body {
 
         .btn-wrapper {
             text-align: center;
+            padding: 0.5rem 0;
         }
 
         .btn-modal {
